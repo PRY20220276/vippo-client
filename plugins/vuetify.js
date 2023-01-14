@@ -1,15 +1,38 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-
 // Vuetify
-import 'vuetify/styles'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
+import "vuetify/styles";
+import { createVuetify } from "vuetify";
+import * as components from "vuetify/components";
+import * as directives from "vuetify/directives";
+import colors from 'vuetify/lib/util/colors';
+import { md3 } from "vuetify/blueprints";
 
-const vuetify = createVuetify({
-  components,
-  directives,
-})
+const myCustomLightTheme = {
+  dark: false,
+  colors: {
+    background: '#E0E0E0',
+    surface: "#FFFFFF",
+    primary: "#6200EE",
+    "primary-darken-1": "#3700B3",
+    secondary: "#03DAC6",
+    "secondary-darken-1": "#018786",
+    error: "#B00020",
+    info: "#2196F3",
+    success: "#4CAF50",
+    warning: "#FB8C00",
+  },
+};
 
-createApp(App).use(vuetify).mount('#app')
+export default defineNuxtPlugin((nuxtApp) => {
+  const vuetify = createVuetify({
+    components,
+    directives,
+    blueprint: md3,
+    theme: {
+      defaultTheme: "myCustomLightTheme",
+      themes: {
+        myCustomLightTheme,
+      },
+    },
+  });
+  nuxtApp.vueApp.use(vuetify);
+});

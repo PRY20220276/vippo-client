@@ -1,6 +1,7 @@
-# Nuxt 3 Minimal Starter
+# VIPPO WEB CLIENT
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+[![Netlify Status](https://api.netlify.com/api/v1/badges/d2a88a43-aaf3-4f9f-aa7f-d41b810aa0af/deploy-status)](https://app.netlify.com/sites/vippo/deploys)
 
 ## Setup
 

@@ -9,7 +9,7 @@ import { md3 } from "vuetify/blueprints";
 const myCustomLightTheme = {
   dark: false,
   colors: {
-    background: '#E0E0E0',
+    background: '#F9FAFB',
     surface: "#FFFFFF",
     primary: "#6200EE",
     "primary-darken-1": "#3700B3",

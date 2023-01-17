@@ -2,11 +2,22 @@
   <v-layout>
     <!-- Application Bar -->
     <v-app-bar color="primary">
-      <v-app-bar-nav-icon color="white"></v-app-bar-nav-icon>
-      <v-app-bar-title class="font-weight-bold">V I P P O</v-app-bar-title>
+      <v-app-bar-nav-icon
+        color="white"
+        @click="drawer = !drawer"
+      ></v-app-bar-nav-icon>
+      <v-app-bar-title
+        class="text-center font-weight-bold"
+        style="letter-spacing: 0.15em"
+        >VIPPO</v-app-bar-title
+      >
     </v-app-bar>
     <!-- Navigation -->
-    <v-navigation-drawer :fixed="!isMobile" :temporary="isMobile">
+    <v-navigation-drawer
+      v-model="drawer"
+      :fixed="!isMobile"
+      :temporary="isMobile"
+    >
       <v-list nav>
         <v-list-item
           prepend-icon="mdi-view-dashboard-outline"

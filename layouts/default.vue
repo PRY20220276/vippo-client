@@ -17,11 +17,13 @@
           prepend-icon="mdi-account-credit-card-outline"
           title="Facturación"
           value="billing"
+          class="title-bold"
         ></v-list-item>
         <v-list-item
           prepend-icon="mdi-account-circle-outline"
           title="Cuenta"
           value="starred"
+          class="title-bold"
         ></v-list-item>
       </v-list>
       <template v-slot:append>
@@ -59,6 +61,7 @@
     </v-main>
   </v-layout>
 </template>
+
 <script>
 export default {
   data: () => ({
@@ -75,8 +78,13 @@ export default {
   methods: {
     checkScreenSize() {
       this.isMobile = window.matchMedia("(max-width: 600px)").matches;
-      console.log("Checking screen size for " + this.isMobile);
     },
   },
 };
 </script>
+
+<style>
+.v-list-item--nav .v-list-item-title {
+  font-weight: 550;
+}
+</style>

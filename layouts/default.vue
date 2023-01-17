@@ -2,11 +2,11 @@
   <v-layout>
     <!-- Application Bar -->
     <v-app-bar color="primary">
-      <v-spacer></v-spacer>
+      <v-app-bar-nav-icon color="white"></v-app-bar-nav-icon>
       <v-app-bar-title class="font-weight-bold">V I P P O</v-app-bar-title>
     </v-app-bar>
     <!-- Navigation -->
-    <v-navigation-drawer expand-on-hover rail>
+    <v-navigation-drawer :fixed="!isMobile" :temporary="isMobile">
       <v-list nav>
         <v-list-item
           prepend-icon="mdi-view-dashboard-outline"
@@ -29,9 +29,24 @@
           value="starred"
         ></v-list-item>
       </v-list>
+      <template v-slot:append>
+        <v-list nav>
+          <v-list-item
+            prepend-icon="mdi-lifebuoy"
+            title="Centro de Ayuda"
+            value="help"
+          ></v-list-item>
+          <v-list-item
+            class="text-red"
+            prepend-icon="mdi-logout"
+            title="Cerrar Sesión"
+            value="logout"
+          ></v-list-item>
+        </v-list>
+      </template>
     </v-navigation-drawer>
     <!-- Main Content -->
-    <v-main >
+    <v-main>
       <slot />
     </v-main>
   </v-layout>
@@ -40,6 +55,20 @@
 export default {
   data: () => ({
     drawer: true,
+    isMobile: false,
   }),
+  mounted() {
+    this.checkScreenSize();
+    window.addEventListener("resize", this.checkScreenSize);
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.checkScreenSize);
+  },
+  methods: {
+    checkScreenSize() {
+      this.isMobile = window.matchMedia("(max-width: 600px)").matches;
+      console.log("Checking screen size for " + this.isMobile);
+    },
+  },
 };
 </script>

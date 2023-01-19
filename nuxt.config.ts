@@ -7,4 +7,14 @@ export default defineNuxtConfig({
   build: {
     transpile: ["vuetify"],
   },
+  app: {
+    head: {
+      titleTemplate: "%s - VIPPO",
+      title: "App",
+      noscript: [
+        // <noscript>JavaScript is required</noscript>
+        { children: "JavaScript is required" },
+      ],
+    },
+  },
 });

@@ -1,33 +1,34 @@
 <template>
-    <v-card class="text-center" :ripple="false">
-        <div class="text-right">
-            <v-btn icon="mdi-close" color="gray" variant="text" @click="onCloseDialog()"></v-btn>
-        </div>
-        <div class="text-h5 font-weight-bold">
-            Iniciar Sesión
-        </div>
-        <p class="text-medium-emphasis">
-            Enviaremos un código a tu correo
+    <p class="text-medium-emphasis pb-2">
+        Enviaremos un código a tu correo
+    </p>
+    <v-form ref="form" lazy-validation>
+        <v-text-field label="Email" color="primary" v-model="email" :rules="rules"></v-text-field>
+    </v-form>
+    <v-btn color="primary" block class="my-2" rounded="lg" variant="flat" @click.stop="onClick">Continuar</v-btn>
+    <v-btn color="gray" block class="my-2" rounded="lg" variant="flat"
+        @click.stop="$store.dispatch('login/backPage')">Cancelar</v-btn>
 
-        </p>
-        <v-card-text>
-            <v-text-field label="Email"></v-text-field>
-            <v-btn color="primary" block class="my-2" rounded="lg" variant="flat"
-                @click.stop="onClick()">Continuar</v-btn>
-        </v-card-text>
-    </v-card>
 </template>
 <script lang="js">
 export default {
     data: () => ({
-
+        email: '',
+        rules: [
+            v => !!v || 'El correo es obligatorio',
+            v => /.+@.+\..+/.test(v) || 'Debe ser un correo válido',]
     }),
     methods: {
-        onClick() {
-            this.$emit("click", true)
+        async validate() {
+            const { valid } = await this.$refs.form.validate()
+            return valid
         },
-        onCloseDialog() {
-            this.$emit("closeDialog")
+        async onClick() {
+            const isValid = await this.validate()
+            if (isValid) {
+                this.$store.dispatch("login/submitEmail", this.email)
+                this.$refs.form.reset()
+            }
         }
     }
 }

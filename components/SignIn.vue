@@ -14,7 +14,7 @@
                     </div>
                 </v-card-title>
                 <v-card-text>
-                    <component :is="steps[$store.getters['login/getCurrentPage']]"></component>
+                    <component :is="steps[$store.getters['login/getCurrentPage']]" @submit="dialog = false"></component>
                 </v-card-text>
             </v-card>
         </v-dialog>

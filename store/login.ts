@@ -1,4 +1,6 @@
 import { ActionTree, GetterTree, MutationTree } from "vuex"
+import { LoginService } from "~~/services/login.service"
+
 
 export const state = () => ({
     currentPageIndex: 0,
@@ -24,11 +26,15 @@ export const getters: GetterTree<RooState, RooState> = {
 }
 
 export const actions: ActionTree<RooState, RooState> = {
-    submitEmail({ commit, dispatch }, email) {
+    async submitEmail({ commit, dispatch }, email) {
+        const resp = await LoginService.instance.sendMail(email);
+        console.log(resp)
         commit('setEmail', email)
         dispatch('nextPage')
     },
-    submitTOPT({ commit }, code) {
+    async submitTOPT({ commit, state }, code) {
+        const resp = await LoginService.instance.verifyTOTP(code, state.email);
+        console.log(resp)
         commit('setEmail', "")
         commit('setPage', 0)
     },

@@ -3,11 +3,11 @@
     <!-- Navigation -->
     <v-navigation-drawer v-model="drawer" :temporary="isMobile">
       <v-list nav>
-        <v-list-item prepend-icon="mdi-view-dashboard-outline" title="Servicios" value="myfiles"></v-list-item>
-        <v-list-item prepend-icon="mdi-folder-play-outline" title="Galería" value="shared"></v-list-item>
-        <v-list-item prepend-icon="mdi-account-credit-card-outline" title="Facturación" value="billing"
+        <v-list-item prepend-icon="mdi-view-dashboard-outline" title="Servicios" value="myfiles" to="/"></v-list-item>
+        <v-list-item prepend-icon="mdi-folder-play-outline" title="Galería" value="shared" to="/gallery"></v-list-item>
+        <v-list-item prepend-icon="mdi-account-credit-card-outline" title="Facturación" value="billing" to="/billing"
           class="title-bold"></v-list-item>
-        <v-list-item prepend-icon="mdi-account-circle-outline" title="Cuenta" value="starred"
+        <v-list-item prepend-icon="mdi-account-circle-outline" title="Cuenta" value="starred" to="/account"
           class="title-bold"></v-list-item>
       </v-list>
       <template v-slot:append>

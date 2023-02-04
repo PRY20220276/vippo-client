@@ -2,7 +2,7 @@
     <div class="text-center">
         <v-dialog v-model="dialog" style="max-width: 60vh; min-width: 300px;">
             <template v-slot:activator="{ props }">
-                <v-btn variant="outlined" class="ma-2" color="secondary" v-bind="props">Sign In</v-btn>
+                <v-btn variant="outlined" class="ma-2" color="white" v-bind="props">Sign In</v-btn>
             </template>
             <v-card class="text-center">
                 <div class="text-right">

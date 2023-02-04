@@ -1,15 +1,13 @@
 <template>
   <v-container fluid>
     <v-breadcrumbs :items="['Foo', 'Bar', 'Fizz']"></v-breadcrumbs>
-    <div class="ml-4 text-h4 text-primary">Services</div>
+    <div class="ml-4 text-h4 text-primary">Billing</div>
     <v-row class="mt-5">
       <v-col v-for="n in 6" :key="n" cols="12" sm="4">
         <v-card
           class="mx-1 card-hover"
           elevation="8"
-          @click="$router.push('/new-video')"
-          :mouseover="(scaleCard = true)"
-          :mouseout="(scaleCard = false)"
+          @click="$router.push('/servicios')"
         >
           <v-card-text class="text-center">
             <v-icon size="50" color="primary"> mdi-home-outline </v-icon>
@@ -22,21 +20,7 @@
 
 <script>
 export default {
-  name: "HomePage",
-  data: () => ({
-    scaleCard: false,
-  }),
-  head() {
-    return {
-      title: "Inicio",
-    };
-  },
+  name: "BillingPage",
+  data: () => ({}),
 };
 </script>
-
-<style scoped>
-.card-hover:hover {
-  transform: scale(1.02);
-  transition: all 0.3s ease;
-}
-</style>

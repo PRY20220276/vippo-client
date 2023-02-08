@@ -4337,9 +4337,16 @@ vue@^3.2.45:
     "@vue/shared" "3.2.45"
 
 vuetify@^3.1.0:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-3.1.1.tgz#47efa8e14bedb877ae64892b5a3e94bb8d225534"
-  integrity sha512-BkfRQZ406xQORpgrcUjuPaT/woO96ef/+2zHCfL3an+CrUhjG/sIAptEybHruq3xwFM0uJibDFqGiridsXc99w==
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-3.1.4.tgz#ce4a3ba5fa35184c3d92147b9603ac56158243e1"
+  integrity sha512-6ERm2a0bJyMLjmRKTifN501o3MsCVp9agtoZsORw1b3X29ycTdXOJdRMEADaDSv59dBWwUVv3WqHcWzCG4Gwfw==
+
+vuex@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/vuex/-/vuex-4.0.2.tgz#f896dbd5bf2a0e963f00c67e9b610de749ccacc9"
+  integrity sha512-M6r8uxELjZIK8kTKDGgZTYX/ahzblnzC4isU1tpmEuOIIKmV+TRdc+H4s8ds2NuZ7wpUTdGRzJRtoj+lI+pc0Q==
+  dependencies:
+    "@vue/devtools-api" "^6.0.0-beta.11"
 
 vuex@^4.0.2:
   version "4.0.2"

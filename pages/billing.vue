@@ -1,7 +1,22 @@
 <template>
   <v-container fluid>
-    <v-breadcrumbs :items="['Foo', 'Bar', 'Fizz']"></v-breadcrumbs>
-    <div class="ml-4 text-h4 text-primary">Billing</div>
+    <!-- Page Breadcrumbs -->
+    <v-breadcrumbs
+      :items="['VIPPO', 'Billing']"
+      bg-color="indigo-lighten-5"
+      class="text-body-2"
+    >
+    </v-breadcrumbs>
+    <!-- End: Page Breadcrumbs -->
+    <!-- Page Toolbar -->
+    <v-toolbar color="background" class="text-primary mt-4">
+      <v-toolbar-title class="ml-1 text-h5">Billing</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn prepend-icon="mdi-rotate-right" variant="outlined">
+        Change Plan
+      </v-btn>
+    </v-toolbar>
+    <!-- End: Page Toolbar -->
     <v-row class="mt-5">
       <v-col v-for="n in 6" :key="n" cols="12" sm="4">
         <v-card

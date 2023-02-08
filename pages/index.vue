@@ -1,22 +1,41 @@
 <template>
   <v-container fluid>
-    <v-breadcrumbs :items="['Foo', 'Bar', 'Fizz']"></v-breadcrumbs>
-    <div class="ml-4 text-h4 text-primary">Services</div>
+    <!-- Page Breadcrumbs -->
+    <v-breadcrumbs
+      :items="['VIPPO', 'Services']"
+      bg-color="indigo-lighten-5"
+      class="text-body-2"
+    >
+    </v-breadcrumbs>
+    <!-- End: Page Breadcrumbs -->
+    <!-- Page Toolbar -->
+    <v-toolbar color="background" class="text-primary mt-4">
+      <v-toolbar-title class="ml-1 text-h5">Services</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-text-field label="Search..." variant="underlined" prepend-icon="mdi-magnify"></v-text-field>
+    </v-toolbar>
+    <!-- End: Page Toolbar -->
+    <!-- Page Content -->
     <v-row class="mt-5">
-      <v-col v-for="n in 6" :key="n" cols="12" sm="4">
+      <v-col v-for="service in services" :key="service.icon" cols="12" sm="4">
         <v-card
           class="mx-1 card-hover"
-          elevation="8"
+          elevation="7"
           @click="$router.push('/new-video')"
           :mouseover="(scaleCard = true)"
           :mouseout="(scaleCard = false)"
         >
-          <v-card-text class="text-center">
-            <v-icon size="50" color="primary"> mdi-home-outline </v-icon>
-          </v-card-text>
+          <v-card-subtitle
+            class="mt-4 text-primary font-weight-bold text-subtitle-2 text-uppercase"
+          >
+            <v-icon start>{{ service.icon }}</v-icon>
+            {{ service.title }}
+          </v-card-subtitle>
+          <v-card-text>{{ service.description }}</v-card-text>
         </v-card>
       </v-col>
     </v-row>
+    <!-- End: Page Content -->
   </v-container>
 </template>
 
@@ -25,6 +44,38 @@ export default {
   name: "HomePage",
   data: () => ({
     scaleCard: false,
+    services: [
+      {
+        icon: "mdi-content-cut",
+        title: "Detección de Tomas",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sapien ante, imperdiet consequat mauris sit amet, volutpat commodo risus.",
+      },
+      {
+        icon: "mdi-transcribe",
+        title: "Transcripción a Texto",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sapien ante, imperdiet consequat mauris sit amet, volutpat commodo risus.",
+      },
+      {
+        icon: "mdi-cancel",
+        title: "Detectar contenido explicito",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sapien ante, imperdiet consequat mauris sit amet, volutpat commodo risus.",
+      },
+      {
+        icon: "mdi-arrow-collapse",
+        title: "Redimensionar Video",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sapien ante, imperdiet consequat mauris sit amet, volutpat commodo risus.",
+      },
+      {
+        icon: "mdi-face-man",
+        title: "Detectar rostros",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sapien ante, imperdiet consequat mauris sit amet, volutpat commodo risus.",
+      },
+    ],
   }),
   head() {
     return {

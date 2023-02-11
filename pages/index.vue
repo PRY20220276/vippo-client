@@ -12,12 +12,7 @@
     <v-toolbar color="background" class="text-primary mt-4">
       <v-toolbar-title class="ml-1 text-h5">Services</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-text-field
-        label="Search..."
-        variant="underlined"
-        prepend-icon="mdi-magnify"
-        v-model="search"
-      ></v-text-field>
+      <v-text-field label="Search..." variant="underlined" prepend-icon="mdi-magnify"></v-text-field>
     </v-toolbar>
     <!-- End: Page Toolbar -->
     <!-- Page Content -->
@@ -48,7 +43,6 @@
 export default {
   name: "HomePage",
   data: () => ({
-    search: "",
     scaleCard: false,
     services: [
       {

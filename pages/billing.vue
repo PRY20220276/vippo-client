@@ -13,7 +13,7 @@
       <v-toolbar-title class="ml-1 text-h5">Billing</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn prepend-icon="mdi-rotate-right" variant="outlined">
-        Change Plan
+        Change
       </v-btn>
     </v-toolbar>
     <!-- End: Page Toolbar -->

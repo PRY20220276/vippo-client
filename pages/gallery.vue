@@ -9,7 +9,7 @@
     <!-- End: Page Breadcrumbs -->
     <!-- Page Toolbar -->
     <v-toolbar color="background" class="text-primary mt-4">
-      <v-toolbar-title class="ml-1 text-h5">Gallery</v-toolbar-title>
+      <v-toolbar-title class="ml-1 text-h5">Gallerie</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn prepend-icon="mdi-upload" variant="outlined">
         Upload Video

@@ -55,7 +55,7 @@
       <v-app-bar-title
         class="text-center font-weight-bold"
         style="letter-spacing: 0.15em"
-        >VIPPO</v-app-bar-title
+        >VIPPO DEV</v-app-bar-title
       >
       <v-spacer></v-spacer>
       <SignIn />

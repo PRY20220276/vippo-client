@@ -1,7 +1,7 @@
 import { ActionTree, GetterTree, MutationTree } from "vuex"
 
 export const state = () => ({
-    currentPageIndex: 0,
+    currentPageIndex: 2,
     email: ''
 })
 export type RooState = ReturnType<typeof state>

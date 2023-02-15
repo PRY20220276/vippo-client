@@ -1,11 +1,7 @@
 <template>
   <v-container fluid>
     <!-- Page Breadcrumbs -->
-    <v-breadcrumbs
-      :items="['VIPPO', 'Services']"
-      bg-color="indigo-lighten-5"
-      class="text-body-2"
-    >
+    <v-breadcrumbs :items="['VIPPO', 'Services']" bg-color="indigo-lighten-5" class="text-body-2">
     </v-breadcrumbs>
     <!-- End: Page Breadcrumbs -->
     <!-- Page Toolbar -->
@@ -18,16 +14,9 @@
     <!-- Page Content -->
     <v-row class="mt-5">
       <v-col v-for="service in services" :key="service.icon" cols="12" sm="4">
-        <v-card
-          class="mx-1 card-hover"
-          elevation="7"
-          @click="$router.push('/new-video')"
-          :mouseover="(scaleCard = true)"
-          :mouseout="(scaleCard = false)"
-        >
-          <v-card-subtitle
-            class="mt-4 text-primary font-weight-bold text-subtitle-2 text-uppercase"
-          >
+        <v-card class="mx-1 card-hover" elevation="7" @click="$router.push('/new-video')"
+          :mouseover="(scaleCard = true)" :mouseout="(scaleCard = false)">
+          <v-card-subtitle class="mt-4 text-primary font-weight-bold text-subtitle-2 text-uppercase">
             <v-icon start>{{ service.icon }}</v-icon>
             {{ service.title }}
           </v-card-subtitle>

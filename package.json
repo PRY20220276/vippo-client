@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@mdi/font": "^7.1.96",
+    "@nuxt/types": "^2.16.0",
     "axios": "^1.2.5",
     "portal-vue": "^3.0.0-beta.0",
     "sass": "^1.57.1",

@@ -10,7 +10,7 @@
         @click.stop="$store.dispatch('login/backPage')">Cancelar</v-btn>
 
 </template>
-<script lang="js">
+<script >
 export default {
     data: () => ({
         email: '',

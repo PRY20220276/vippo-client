@@ -11,7 +11,7 @@ const myMiddleware: Middleware = async (context: any) => {
     if ($store.getters["profile/getProfile"].logged) {
         return
     }
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("accessToken")
     if (!token) {
         $router.push("/")
     } else {

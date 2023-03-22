@@ -20,28 +20,29 @@
     </v-dialog>
 
   </div>
-
 </template>
 <script>
 import SignInStepOne from "./SignInSteps/SignInStepOne.vue"
 import SignInStepTwo from "./SignInSteps/SignInStepTwo.vue"
-import SignInStepThree from "./SignInSteps/SignInStepThree.vue"
 export default {
   components: {
     SignInStepOne,
     SignInStepTwo,
-    SignInStepThree
   },
   data: () => ({
     dialog: false,
-    steps: ["SignInStepOne", "SignInStepTwo", "SignInStepThree"],
+    steps: ["SignInStepOne", "SignInStepTwo"],
     currentStepIndex: 0
   }),
   methods: {
-    submit() {
+    submit(ev) {
+
+      console.log("heey submitted", ev)
       try {
         this.$store.commit("login/setPage", 0)
         this.dialog = false
+        this.$store.commit("profile/logIn")
+
         this.$router.push("/account")
       } catch (error) {
         console.log(error)

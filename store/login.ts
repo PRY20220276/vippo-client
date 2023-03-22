@@ -26,13 +26,9 @@ export const getters: GetterTree<RooState, RooState> = {
 }
 
 export const actions: ActionTree<RooState, RooState> = {
-    async submitEmail({ commit, dispatch }, email) {
-        await LoginService.instance.sendMail(email);
+    async submitEmail({ commit, dispatch }, { email, password }) {
+        const { data } = await LoginService.instance.login(email, password);
         commit('setEmail', email)
-        dispatch('nextPage')
-    },
-    async submitTOPT({ commit, state }, code) {
-        const { data } = await LoginService.instance.verifyTOTP(code, state.email);
         return data
     },
     nextPage({ commit, state }) {

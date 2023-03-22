@@ -11,9 +11,10 @@ export class LoginService {
     }
     constructor(private httpClient: AxiosInstance) {
     }
-    sendMail(email: string) {
-        return this.httpClient.post("login/totp", {
-            email
+    login(email: string, password: string) {
+        return this.httpClient.post("/auth/login-email", {
+            email,
+            password
         })
     }
     verifyTOTP(code: string, email: string) {

@@ -1,17 +1,17 @@
 <template>
     <div style="text-align:center">
-        <VideoPreview :video="selectedVideo" />
+        <VideoPreview :url="sourceUrl" />
         <VideoUploaderBtn @uploaded="onUploadFile" />
     </div>
 </template>
 <script>
 export default {
     data: () => ({
-        selectedVideo: null
+        sourceUrl: null
     }),
     methods: {
         onUploadFile(file) {
-            this.selectedVideo = file
+            this.sourceUrl = URL.createObjectURL(file)
             this.$emit("uploaded", file)
         }
     }

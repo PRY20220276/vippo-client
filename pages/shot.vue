@@ -28,15 +28,12 @@
                 <v-window-item value="configuracion">
                     <div style="display:flex;padding: 10px;">
                         <div style="flex:1 1 auto; margin: 0px 30px;">
-                            <<<<<<< HEAD <v-form ref="video_form">
-                                =======
-                                <v-form ref="configuration_form">
-                                    >>>>>>> 5838653 (add shot page)
-                                    <v-textarea label="Título" rows="1" color="primary" v-model="videoTitle"
-                                        :disabled="!selectedFile" variant="outlined"></v-textarea>
-                                    <v-textarea label="Descripción" color="primary" v-model="videoDescription"
-                                        :disabled="!selectedFile" variant="outlined"></v-textarea>
-                                </v-form>
+                            <v-form ref="video_form">
+                                <v-textarea label="Título" rows="1" color="primary" v-model="videoTitle"
+                                    :disabled="!selectedFile" variant="outlined"></v-textarea>
+                                <v-textarea label="Descripción" color="primary" v-model="videoDescription"
+                                    :disabled="!selectedFile" variant="outlined"></v-textarea>
+                            </v-form>
                         </div>
                     </div>
                     <v-divider></v-divider>

@@ -37,7 +37,6 @@ export default {
   methods: {
     submit(ev) {
 
-      console.log("heey submitted", ev)
       try {
         this.$store.commit("login/setPage", 0)
         this.dialog = false

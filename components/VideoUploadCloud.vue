@@ -22,11 +22,10 @@ export default {
         modalActive: false,
         progressValue: 0,
         file: null,
-        interval: 0
     }),
     watch: {
         progressValue(value) {
-            if (value > 100) {
+            if (value >= 100.0) {
                 this.modalActive = false
                 this.submitVideo()
                 this.resetInterval()
@@ -35,14 +34,16 @@ export default {
     },
     methods: {
         onUploadFile(e) {
+            let el = this;
             this.file = e
             this.modalActive = true;
-            this.interval = setInterval(() => {
-                this.progressValue += 10
-            }, 1350)
+            this.$store.dispatch("gallery/uploadVideo", {
+                video: this.file, onProgressCallback: (percentCompleted) => {
+                    el.progressValue = percentCompleted
+                }
+            })
         },
         resetInterval() {
-            clearInterval(this.interval)
             this.progressValue = 0
         },
 

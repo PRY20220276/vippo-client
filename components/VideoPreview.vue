@@ -6,44 +6,55 @@
             :style="{ width: '300px', height: '300px', backgroundColor: 'gray', display: 'flex', justifyContent: 'center', alignItems: 'center' }">
             <v-icon color="black" icon="mdi-video-box" size="80px"> </v-icon>
         </div>
+        <p class="text-red" v-if="error">{{ error }}</p>
     </div>
 </template>
 <script>
 export default {
     props: {
-        video: {
-            type: Object,
-            default: () => {
-                return null
-            }
+        url: {
+            type: String,
+            default: ""
         }
     },
     data: () => ({
+        error: null,
         style: {
             width: "300px",
             height: "300px",
             background: "black"
         }
     }),
+    beforeMount() {
+        this.buildPreview()
+    },
     watch: {
-        video() {
-            if (!this.video) return;
-            this.buildPreview()
-            this.$forceUpdate()
+        url() {
+            this.refresh()
         }
     },
     methods: {
+        refresh() {
+            if (!this.url) return;
+            this.buildPreview()
+            this.$forceUpdate()
+        },
         buildPreview() {
-            const videoUrl = URL.createObjectURL(this.video);
+            let el = this
             const videoPreview = document.createElement('video');
-            videoPreview.src = videoUrl;
+            videoPreview.src = this.url;
             videoPreview.controls = true;
             videoPreview.style.objectFit = "contain"
             videoPreview.style.width = "100%"
             videoPreview.style.height = "100%"
-            videoPreview.addEventListener("loadedmetadata", () => {
-                if (document.querySelector("video")) {
-                    document.querySelector("video").remove()
+            videoPreview.addEventListener("error", (event) => {
+                if (this.url) {
+                    el.error = "No se puede reproducir el video"
+                }
+            })
+            videoPreview.addEventListener("loadedmetadata", (event) => {
+                if (this.$el.querySelector("video")) {
+                    this.$el.querySelector("video").remove()
                 }
                 this.$refs["container"].appendChild(videoPreview)
                 this.$refs["preview_empty"].classList.add("d-none")

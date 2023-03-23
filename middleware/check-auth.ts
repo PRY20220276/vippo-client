@@ -1,5 +1,5 @@
 import { Middleware } from '@nuxt/types'
-import { ProfileService } from '~~/services/profile.service';
+import { updateAuthorizationToken } from '~~/services/config';
 
 const myMiddleware: Middleware = async (context: any) => {
     if (process.server) {
@@ -11,16 +11,12 @@ const myMiddleware: Middleware = async (context: any) => {
     if ($store.getters["profile/getProfile"].logged) {
         return
     }
-    const token = localStorage.getItem("accessToken")
+    const token = localStorage.getItem("token")
     if (!token) {
         $router.push("/")
     } else {
-        try {
-            const { data } = await ProfileService.instance.getProfile()
-            $store.commit("profile/setProfile", data)
-        } catch (error) {
-            $router.push("/")
-        }
+        updateAuthorizationToken(token)
+
     }
 }
 export default myMiddleware

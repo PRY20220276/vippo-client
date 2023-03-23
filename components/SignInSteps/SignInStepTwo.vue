@@ -29,8 +29,7 @@ export default {
             const isValid = await this.validate()
             if (isValid) {
                 try {
-                    const resp = await this.$store.dispatch("login/submitEmail", { email: this.email, password: this.password })
-                    localStorage.setItem("token", resp.accessToken)
+                    await this.$store.dispatch("login/submitEmail", { email: this.email, password: this.password })
                     this.$store.commit("profile/setProfile", { email: this.email })
                     this.$refs.form.reset()
                     this.$emit("onSubmit", "submitted")

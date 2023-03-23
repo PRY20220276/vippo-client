@@ -1,4 +1,5 @@
 import { ActionTree, GetterTree, MutationTree } from "vuex"
+import { updateAuthorizationToken } from "~~/services/config"
 import { LoginService } from "~~/services/login.service"
 
 
@@ -28,6 +29,8 @@ export const getters: GetterTree<RooState, RooState> = {
 export const actions: ActionTree<RooState, RooState> = {
     async submitEmail({ commit, dispatch }, { email, password }) {
         const { data } = await LoginService.instance.login(email, password);
+        updateAuthorizationToken(data.accessToken);
+        localStorage.setItem("token", data.accessToken)
         commit('setEmail', email)
         return data
     },

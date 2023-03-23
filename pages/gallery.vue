@@ -13,20 +13,19 @@
 
       </v-toolbar>
       <!-- End: Page Toolbar -->
+      <div style="overflow-y:scroll;height: 80vh;">
+        <v-row class="mt-5" v-if="!$store.getters['gallery/getVideos'].length">
+          <v-col v-for="n in   6" :key="n" cols="12" sm="4">
+            <SkeletonCardLoader :key="n" />
+          </v-col>
+        </v-row>
+        <v-row v-else class="mt-5">
+          <v-col v-for="v in $store.getters['gallery/getVideos']" :key="v.name" cols="12" sm="4">
+            <VideoPreview :key="v.name" :url="v.url" />
+          </v-col>
+        </v-row>
+      </div>
 
-      <v-row class="mt-5" v-if="!$store.getters['gallery/getVideos'].length">
-        <v-col v-for="n in   6" :key="n" cols="12" sm="4">
-          <v-card elevation="3" @click="$router.push('/servicios')">
-            <v-img src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg" height="200px" cover></v-img>
-            <v-card-subtitle> 14/07/2021</v-card-subtitle>
-          </v-card>
-        </v-col>
-      </v-row>
-      <v-row v-else class="mt-5">
-        <v-col v-for="v in $store.getters['gallery/getVideos']" :key="v.name" cols="12" sm="4">
-          <VideoPreview :key="v.name" :url="v.url" />
-        </v-col>
-      </v-row>
     </ClientOnly>
   </v-container>
 </template>
@@ -36,7 +35,11 @@ definePageMeta({
 })
 </script>
 <script>
+import SkeletonCardLoader from '~~/components/Shared/SkeletonCardLoader.vue';
 export default {
+  components: {
+    SkeletonCardLoader
+  },
   name: "GalleryPage",
   data: () => ({
   }),

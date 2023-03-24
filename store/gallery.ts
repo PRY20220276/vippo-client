@@ -28,10 +28,11 @@ export const getters: GetterTree<RooState, RooState> = {
 }
 
 export const actions: ActionTree<RooState, RooState> = {
-    async fetchGallery({ commit }) {
-        const { data }: any = await GalleryService.instance.getVideos();
+    async fetchGallery({ commit }, { limit, page }: { limit: number, page: number }) {
+        const { data }: any = await GalleryService.instance.getVideos(limit, page);
         const videos: VideoDto[] = data.items.map((v: any) => ({ name: v.name, url: v.url }))
         commit("setVideos", videos)
+        return { totalItems: data.totalItems, page: data.page, totalPages: data.totalPages }
     },
     async uploadVideo({ dispatch }, { video, onProgressCallback }) {
         const { data } = await GalleryService.instance.uploadVideo(video, onProgressCallback)

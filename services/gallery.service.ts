@@ -12,7 +12,7 @@ export class GalleryService {
     constructor(private httpClient: AxiosInstance) {
     }
 
-    getVideos(limit: number = 10, page: number = 1) {
+    getVideos(limit: number = 6, page: number = 1) {
         return this.httpClient.get("/videos", {
             params: {
                 limit, page

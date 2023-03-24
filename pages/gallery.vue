@@ -13,19 +13,18 @@
 
       </v-toolbar>
       <!-- End: Page Toolbar -->
-      <div style="overflow-y:scroll;height: 80vh;">
-        <v-row class="mt-5" v-if="!$store.getters['gallery/getVideos'].length">
-          <v-col v-for="n in   6" :key="n" cols="12" sm="4">
-            <SkeletonCardLoader :key="n" />
-          </v-col>
-        </v-row>
-        <v-row v-else class="mt-5">
-          <v-col v-for="v in $store.getters['gallery/getVideos']" :key="v.name" cols="12" sm="4">
-            <VideoPreview :key="v.name" :url="v.url" />
-          </v-col>
-        </v-row>
-      </div>
 
+      <v-row class="mt-5" v-if="fetch === 'loading'">
+        <v-col v-for="n in   6" :key="n" cols="12" sm="4">
+          <SkeletonCardLoader :key="n" />
+        </v-col>
+      </v-row>
+      <v-row v-else class="my-5" v-if="fetch === 'done'">
+        <v-col v-for="v in $store.getters['gallery/getVideos']" :key="v.name" cols="12" sm="4">
+          <VideoPreview :key="v.url" :url="v.url" />
+        </v-col>
+      </v-row>
+      <v-pagination v-if="fetch === 'done'" v-model="currentPage" :length="totalPages" rounded="circle"></v-pagination>
     </ClientOnly>
   </v-container>
 </template>
@@ -42,10 +41,32 @@ export default {
   },
   name: "GalleryPage",
   data: () => ({
+    fetch: '',
+    currentPage: 1,
+    totalPages: 1,
+    limit: 6
   }),
-  created() {
-    this.$store.dispatch("gallery/fetchGallery")
-
+  async created() {
+    const resp = await this.fetchData()
+    this.totalPages = resp.totalPages
+  },
+  watch: {
+    currentPage() {
+      this.fetchData()
+    }
+  },
+  methods: {
+    async fetchData() {
+      let resp;
+      this.fetch = 'loading';
+      try {
+        resp = await this.$store.dispatch("gallery/fetchGallery", { limit: this.limit, page: this.currentPage })
+        this.fetch = 'done'
+      } catch (error) {
+        this.fetch = "error"
+      }
+      return resp
+    }
   }
 
 };

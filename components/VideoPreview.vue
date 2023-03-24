@@ -25,7 +25,7 @@ export default {
             background: "black"
         }
     }),
-    beforeMount() {
+    created() {
         this.buildPreview()
     },
     watch: {
@@ -35,6 +35,7 @@ export default {
     },
     methods: {
         refresh() {
+            this.error = ""
             if (!this.url) return;
             this.buildPreview()
             this.$forceUpdate()

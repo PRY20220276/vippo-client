@@ -5,7 +5,7 @@ import * as galleryStore from "../store/gallery"
 import { updateAuthorizationToken } from "~~/services/config";
 
 
-const store = createStore({
+export const store = createStore({
     modules: {
         login: {
             namespaced: true,

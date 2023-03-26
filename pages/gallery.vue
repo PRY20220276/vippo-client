@@ -7,9 +7,8 @@
     <!-- Page Toolbar -->
     <ClientOnly>
       <v-toolbar color="background" class="text-primary mt-4">
-        <v-toolbar-title class="ml-1 text-h5">Gallerie</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <VideoUploadCloud :upload-options="['local']" />
+        <v-toolbar-title class="ml-1 text-h5">Gallery</v-toolbar-title>
+
 
       </v-toolbar>
       <!-- End: Page Toolbar -->
@@ -20,8 +19,18 @@
         </v-col>
       </v-row>
       <v-row v-else class="my-5" v-if="fetch === 'done'">
-        <v-col v-for="v in $store.getters['gallery/getVideos']" :key="v.name" cols="12" sm="4">
-          <VideoPreview :key="v.url" :url="v.url" />
+        <v-col v-for="(v, index) in $store.getters['gallery/getVideos']" :key="v.name" cols="12" sm="4">
+          <v-card>
+            <VideoPreview :key="v.url" :url="v.url" @onPlayBackError="(ev) => onHandleVideoPlayBackError(index)" />
+            <template v-if="!v.hasError">
+              <v-card-title>
+                {{ v.name }}
+              </v-card-title>
+              <v-card-actions>
+                <VideoGalleryModal :videoIndex="index"></VideoGalleryModal>
+              </v-card-actions>
+            </template>
+          </v-card>
         </v-col>
       </v-row>
       <v-pagination v-if="fetch === 'done'" v-model="currentPage" :length="totalPages" rounded="circle"></v-pagination>
@@ -34,10 +43,12 @@ definePageMeta({
 })
 </script>
 <script>
+import VideoGalleryModal from '~~/components/Modals/VideoGalleryModal.vue';
 import SkeletonCardLoader from '~~/components/Shared/SkeletonCardLoader.vue';
 export default {
   components: {
-    SkeletonCardLoader
+    SkeletonCardLoader,
+    VideoGalleryModal
   },
   name: "GalleryPage",
   data: () => ({
@@ -66,6 +77,9 @@ export default {
         this.fetch = "error"
       }
       return resp
+    },
+    onHandleVideoPlayBackError(videoId) {
+      this.$store.commit("gallery/setVideoPlaybackError", videoId)
     }
   }
 

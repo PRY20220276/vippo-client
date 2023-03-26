@@ -3,10 +3,10 @@
         <div ref="container" class="d-none" :style="style">
         </div>
         <div ref="preview_empty"
-            :style="{ width: '300px', height: '300px', backgroundColor: 'gray', display: 'flex', justifyContent: 'center', alignItems: 'center' }">
+            :style="{ width: '100%', height: '300px', backgroundColor: 'gray', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }">
             <v-icon color="black" icon="mdi-video-box" size="80px"> </v-icon>
+            <p class="text-black" v-if="error">{{ error }}</p>
         </div>
-        <p class="text-red" v-if="error">{{ error }}</p>
     </div>
 </template>
 <script>
@@ -20,7 +20,7 @@ export default {
     data: () => ({
         error: null,
         style: {
-            width: "300px",
+            width: "100%",
             height: "300px",
             background: "black"
         }
@@ -49,8 +49,10 @@ export default {
             videoPreview.style.width = "100%"
             videoPreview.style.height = "100%"
             videoPreview.addEventListener("error", (event) => {
+                console.log(event)
                 if (this.url) {
                     el.error = "No se puede reproducir el video"
+                    this.$emit("onPlayBackError", event)
                 }
             })
             videoPreview.addEventListener("loadedmetadata", (event) => {

@@ -7,17 +7,17 @@
 
         <v-list nav>
           <v-list-item prepend-icon="mdi-view-dashboard-outline" title="Servicios" value="myfiles" to="/"></v-list-item>
-          <v-list-item prepend-icon="mdi-folder-play-outline" title="Galería" value="shared"
-            to="/gallery"></v-list-item>
-          <v-list-item prepend-icon="mdi-account-credit-card-outline" title="Facturación" value="billing" to="/billing"
-            class="title-bold"></v-list-item>
+          <v-list-item prepend-icon="mdi-folder-play-outline" title="Galería" value="shared" to="/gallery"
+            v-only-logged></v-list-item>
+          <v-list-item prepend-icon="mdi-account-credit-card-outline" v-only-logged title="Facturación" value="billing"
+            to="/billing" class="title-bold"></v-list-item>
           <v-list-item prepend-icon="mdi-account-circle-outline" title="Cuenta" value="starred" to="/account"
-            :active="$route.name === 'account'" class="title-bold"></v-list-item>
+            :active="$route.name === 'account'" v-only-logged class="title-bold"></v-list-item>
         </v-list>
         <template v-slot:append>
           <v-list nav>
-            <v-list-item prepend-icon="mdi-lifebuoy" title="Centro de Ayuda" value="help"></v-list-item>
-            <v-list-item class="text-red" prepend-icon="mdi-logout" title="Cerrar Sesión" @click="logout"
+            <v-list-item prepend-icon="mdi-lifebuoy" title="Support Center" value="help"></v-list-item>
+            <v-list-item class="text-red" prepend-icon="mdi-logout" v-only-logged title="Log out" @click="logout"
               value="logout"></v-list-item>
           </v-list>
         </template>

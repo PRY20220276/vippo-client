@@ -1,11 +1,7 @@
 <template>
   <v-container fluid>
     <!-- Page Breadcrumbs -->
-    <v-breadcrumbs
-      :items="['VIPPO', 'Billing']"
-      bg-color="indigo-lighten-5"
-      class="text-body-2"
-    >
+    <v-breadcrumbs :items="['VIPPO', 'Billing']" bg-color="indigo-lighten-5" class="text-body-2">
     </v-breadcrumbs>
     <!-- End: Page Breadcrumbs -->
     <!-- Page Toolbar -->
@@ -17,25 +13,43 @@
       </v-btn>
     </v-toolbar>
     <!-- End: Page Toolbar -->
-    <v-row class="mt-5">
-      <v-col v-for="n in 6" :key="n" cols="12" sm="4">
-        <v-card
-          class="mx-1 card-hover"
-          elevation="8"
-          @click="$router.push('/servicios')"
-        >
-          <v-card-text class="text-center">
-            <v-icon size="50" color="primary"> mdi-home-outline </v-icon>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
+    <ClientOnly>
+      <v-row class="mt-5">
+        <v-col cols="4">
+          <v-card class="mx-1 card-hover">
+            <v-card-title>Storage Status</v-card-title>
+            <v-card-text>
+              <v-row>
+                <v-col style="text-align: center;">
+                  <v-progress-circular v-model="consumedStorage" color="primary" size="60"></v-progress-circular>
+                </v-col>
+                <v-col>
+                  <p>Capacity: {{ capacity }}</p>
+                  <p>Used: {{ used }}</p>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+    </ClientOnly>
   </v-container>
 </template>
 
 <script>
 export default {
   name: "BillingPage",
-  data: () => ({}),
+  data: () => ({
+    consumedStorage: 0,
+    capacity: "",
+    used: ""
+
+  }),
+  async beforeMount() {
+    const response = await this.$store.dispatch("gallery/getStats")
+    this.consumedStorage = (response.totalStorageUsed / response.maxStorageSize) * 100
+    this.used = response.usedGB;
+    this.capacity = response.maxGB;
+  }
 };
 </script>

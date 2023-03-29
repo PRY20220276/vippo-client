@@ -29,6 +29,9 @@ export class GalleryService {
             }
         })
     }
+    getCurrentVideoStats() {
+        return this.httpClient.get("/me/videos/stats")
+    }
 
 
 }

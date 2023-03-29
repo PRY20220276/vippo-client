@@ -59,6 +59,10 @@ export const actions: ActionTree<RooState, RooState> = {
         const { data } = await GalleryService.instance.uploadVideo(video, onProgressCallback)
         dispatch("fetchGallery")
         return data;
+    },
+    async getStats() {
+        const { data } = await GalleryService.instance.getCurrentVideoStats()
+        return data
     }
 
 }

@@ -59,7 +59,7 @@ export default {
         onUploadFile(e) {
             const file = e
             setTimeout(() => {
-                this.$swal.fire("Petición de etiquetas exitosa", "Estamos procesando tu video. Te notificaremos cuando este listo! También puedes consultar el estado en usage. ", "success")
+                this.$swal.fire("Petición de etiquetas exitosa", "Estamos procesando tu video. Te notificaremos cuando este listo! </br> También puedes consultar el estado en <b>usage</b>. ", "success")
 
             }, 1500)
             //this.$store.dispatch("gallery/uploadVideo", { video: file })
@@ -67,7 +67,11 @@ export default {
     }
 }
 </script>
-<style>
+<style lang="scss">
+.swal2-styled.swal2-confirm {
+    background-color: #6200EE;
+}
+
 .container {
     padding-top: 5vw;
     text-align: center;

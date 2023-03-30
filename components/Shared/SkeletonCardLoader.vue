@@ -11,12 +11,14 @@ export default {
 
 }
 </script>
-<style lang="css">
+<style lang="scss">
 .skeleton {
     animation: skeleton-loading 1s linear infinite alternate;
 }
 
 @keyframes skeleton-loading {
+
+
     0% {
         background-color: hsl(200, 20%, 80%);
     }

@@ -19,6 +19,7 @@ const myCustomLightTheme = {
     info: "#2196F3",
     success: "#4CAF50",
     warning: "#FB8C00",
+    labeling_service_tag: "#6200EE",
   },
 };
 

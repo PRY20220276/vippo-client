@@ -32,6 +32,22 @@
           </v-card>
         </v-col>
       </v-row>
+      <div class="mt-6">
+        <div class="text-h5 text-primary">Videos en cola</div>
+        <div class="mt-5">
+          <ScheduledVideo class="my-2" title="Romeo Santos.mp4" :services="['labeling']" createdAt="03/12/2022 13:34">
+          </ScheduledVideo>
+          <ScheduledVideo class="my-2" title="Romeo Santos.mp4" :services="['labeling']" createdAt="03/12/2022 13:34">
+          </ScheduledVideo>
+          <ScheduledVideo class="my-2" title="Romeo Santos.mp4" :services="['labeling']" createdAt="03/12/2022 13:34">
+          </ScheduledVideo>
+
+        </div>
+
+      </div>
+
+
+
     </ClientOnly>
   </v-container>
 </template>

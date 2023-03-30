@@ -14,7 +14,7 @@
     <!-- Page Content -->
 
     <v-row class="mt-5">
-      <v-col v-for="service in services" :key="service.icon" cols="12" sm="4">
+      <v-col v-for="service in services.filter(x => x.enabled)" :key="service.icon" cols="12" sm="4">
         <v-card class="mx-1 card-hover" elevation="7" @click="$router.push(service.to)" :mouseover="(scaleCard = true)"
           :mouseout="(scaleCard = false)">
           <v-card-subtitle class="mt-4 text-primary font-weight-bold text-subtitle-2 text-uppercase">
@@ -39,8 +39,16 @@ export default {
     services: [
       {
         icon: "mdi-content-cut",
+        title: "Detección de Etiquetas",
+        to: "/labels",
+        enabled: true,
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sapien ante, imperdiet consequat mauris sit amet, volutpat commodo risus."
+      },
+      {
+        icon: "mdi-content-cut",
         title: "Detección de Tomas",
         to: "/shot",
+        enabled: false,
         description:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sapien ante, imperdiet consequat mauris sit amet, volutpat commodo risus.",
       },
@@ -48,6 +56,7 @@ export default {
         icon: "mdi-transcribe",
         to: '/new-video',
         title: "Transcripción a Texto",
+        enabled: false,
         description:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sapien ante, imperdiet consequat mauris sit amet, volutpat commodo risus.",
       },
@@ -55,6 +64,7 @@ export default {
         icon: "mdi-cancel",
         title: "Detectar contenido explicito",
         to: '/new-video',
+        enabled: false,
         description:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sapien ante, imperdiet consequat mauris sit amet, volutpat commodo risus.",
       },
@@ -62,6 +72,7 @@ export default {
         icon: "mdi-arrow-collapse",
         title: "Redimensionar Video",
         to: '/new-video',
+        enabled: false,
         description:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sapien ante, imperdiet consequat mauris sit amet, volutpat commodo risus.",
       },
@@ -69,6 +80,7 @@ export default {
         icon: "mdi-face-man",
         title: "Detectar rostros",
         to: '/new-video',
+        enabled: false,
         description:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sapien ante, imperdiet consequat mauris sit amet, volutpat commodo risus.",
       },

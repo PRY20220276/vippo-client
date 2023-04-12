@@ -4,7 +4,8 @@
       <!-- Navigation -->
       <v-navigation-drawer v-model="drawer" :temporary="isMobile">
         <v-list nav>
-          <v-list-item prepend-icon="mdi-view-dashboard-outline" title="Servicios" value="myfiles" to="/"></v-list-item>
+          <v-list-item prepend-icon="mdi-view-dashboard-outline" title="Analyze Video" value="myfiles"
+            to="/"></v-list-item>
           <v-list-item prepend-icon="mdi-folder-play-outline" title="Galería" value="shared" to="/gallery"
             v-only-logged></v-list-item>
           <v-list-item prepend-icon="mdi-account-credit-card-outline" v-only-logged title="Usage" value="usage"

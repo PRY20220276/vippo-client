@@ -19,12 +19,9 @@
                 </v-card-text>
             </v-card>
         </v-dialog>
-        <v-btn color="primary" :disabled="!$store.getters['profile/getProfile'].logged" variant="outlined"
-            :loading="isSelecting" @click="onBtnClick" style="margin:10px 0">
-            Upload File
+        <v-btn color="primary" variant="outlined" :loading="isSelecting" @click="onBtnClick" style="margin:10px 0">
+            Upload
         </v-btn>
-        <div v-if="!$store.getters['profile/getProfile'].logged" class="text-caption text-bold-emphasis text-info">*Debes
-            iniciar sesión para usar el servicio</div>
         <input ref="uploader" class="d-none" type="file" @change="onFileChanged">
     </div>
 </template>
@@ -60,6 +57,8 @@ export default {
         onFileChanged(e) {
             this.selectedFile = e.target.files[0]
             this.$emit("uploaded", this.selectedFile)
+            this.selectedFile = null
+            this.$refs.uploader.value = null
 
         },
         onBtnClick() {

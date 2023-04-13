@@ -55,13 +55,17 @@ export const actions: ActionTree<RooState, RooState> = {
         commit("setVideos", videos)
         return { totalItems: data.totalItems, page: data.page, totalPages: data.totalPages }
     },
-    async uploadVideo({ dispatch }, { video, onProgressCallback }) {
-        const { data } = await GalleryService.instance.uploadVideo(video, onProgressCallback)
-        dispatch("fetchGallery")
+    async uploadVideo({ dispatch }, { video, signedURL, onProgressCallback }) {
+        const { data } = await GalleryService.instance.uploadVideo(video, signedURL, onProgressCallback)
         return data;
     },
     async getStats() {
         const { data } = await GalleryService.instance.getCurrentVideoStats()
+        return data
+    },
+
+    async getSignedURL(store, { video }) {
+        const { data } = await GalleryService.instance.getSignedUrl(video)
         return data
     }
 

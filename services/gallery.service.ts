@@ -14,10 +14,9 @@ export class GalleryService {
     }
 
     getSignedUrl(video: File) {
-        return this.httpClient.get("/me/videos/signed-url", {
-            params: {
-                contentType: video.type
-            }
+        return this.httpClient.post("/me/videos/signed-url", {
+            contentType: video.type,
+            name: video.name
         })
     }
     getVideos(limit: number = 6, page: number = 1) {

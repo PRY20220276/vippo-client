@@ -15,8 +15,10 @@ interface VideoDto {
     name: string
     url: string
     hasError: boolean
+    createdAt: string
     id: number
     videoAnalysis?: any
+    thumbnail?: string
 }
 
 export const state = (): { videos: VideoDto[] } => ({
@@ -51,7 +53,7 @@ export const getters: GetterTree<RooState, RooState> = {
 export const actions: ActionTree<RooState, RooState> = {
     async fetchGallery({ commit }, { limit, page }: { limit: number, page: number }) {
         const { data }: any = await GalleryService.instance.getVideos(limit, page);
-        const videos: VideoDto[] = data.items.map((v: any) => ({ name: v.originalName, url: v.url, hasError: false, id: v.id, videoAnalysis: mockVideoAnalysisData }))
+        const videos: VideoDto[] = data.items.map((v: any) => ({ name: v.name, url: v.src, hasError: false, id: v.name, createdAt: v.createdAt, thumbnail: v.thumbnail, videoAnalysis: mockVideoAnalysisData }))
         commit("setVideos", videos)
         return { totalItems: data.totalItems, page: data.page, totalPages: data.totalPages }
     },

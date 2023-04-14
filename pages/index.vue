@@ -1,102 +1,121 @@
 <template>
-  <v-container fluid>
-    <!-- Page Breadcrumbs -->
-    <v-breadcrumbs :items="['VIPPO', 'Services']" bg-color="indigo-lighten-5" class="text-body-2">
-    </v-breadcrumbs>
-    <!-- End: Page Breadcrumbs -->
-    <!-- Page Toolbar -->
-    <v-toolbar color="background" class="text-primary mt-4">
-      <v-toolbar-title class="ml-1 text-h5">Services</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-text-field label="Search..." variant="underlined" prepend-icon="mdi-magnify"></v-text-field>
-    </v-toolbar>
-    <!-- End: Page Toolbar -->
-    <!-- Page Content -->
+  <v-dialog v-model="modalActive" style="max-width: 60vw; min-width: 300px;" persistent>
+    <v-card>
+      <v-card-title>
+        <h4 class="text-primary">Subiendo video</h4>
+      </v-card-title>
+      <v-card-text style="margin-bottom: 15px;">
+        <div>
+          <v-progress-linear v-model="progressValue" buffer-value="100" color="primary"></v-progress-linear>
+        </div>
+      </v-card-text>
 
-    <v-row class="mt-5">
-      <v-col v-for="service in services.filter(x => x.enabled)" :key="service.icon" cols="12" sm="4">
-        <v-card class="mx-1 card-hover" elevation="7" @click="$router.push(service.to)" :mouseover="(scaleCard = true)"
-          :mouseout="(scaleCard = false)">
-          <v-card-subtitle class="mt-4 text-primary font-weight-bold text-subtitle-2 text-uppercase">
-            <v-icon start>{{ service.icon }}</v-icon>
-            {{ service.title }}
-          </v-card-subtitle>
-          <v-card-text>{{ service.description }}</v-card-text>
-        </v-card>
+    </v-card>
+
+  </v-dialog>
+  <v-container class="container">
+    <div class="text-h3 font-weight-bold">Upload a new video</div>
+    <div class="text-subtitle-1 font-weight-light my-2">Our AI Engine will analyze, tag and summarize your video in
+      seconds.</div>
+    <VideoUploaderBtn @uploaded="onUploadFile" :upload-options="['local']"></VideoUploaderBtn>
+
+
+  </v-container>
+  <v-container class="container">
+    <v-row justify="center">
+      <v-col md="4" sm="6">
+        <div>
+          <v-icon size="35">mdi-account-check</v-icon>
+          <p class="text-subtitle-1 font-medium-normal ">Recomendacion 1</p>
+          <div class="text-medium-emphasis"> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed,
+            deleniti nostrum tempora beatae
+            quisquam
+            perferendis eum quis ullam at, cupiditate dolor laudantium eos! Ducimus excepturi autem
+            molestiae
+            provident
+            commodi aut.</div>
+
+        </div>
       </v-col>
+      <v-col md="4" sm="6">
+        <div>
+          <v-icon size="35">mdi-shield-account</v-icon>
+          <p class="text-subtitle-1 font-medium-normal ">Recomendacion 1</p>
+          <div class="text-medium-emphasis"> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed,
+            deleniti nostrum tempora beatae
+            quisquam
+            perferendis eum quis ullam at, cupiditate dolor laudantium eos! Ducimus excepturi autem
+            molestiae
+            provident
+            commodi aut.</div>
 
+        </div>
+      </v-col>
+      <v-col md="4" sm="6">
+        <div>
+          <v-icon size="35">mdi-clock-check</v-icon>
+          <p class="text-subtitle-1 font-medium-normal ">Recomendacion 1</p>
+          <div class="text-medium-emphasis"> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed,
+            deleniti nostrum tempora beatae
+            quisquam
+            perferendis eum quis ullam at, cupiditate dolor laudantium eos! Ducimus excepturi autem
+            molestiae
+            provident
+            commodi aut.</div>
 
+        </div>
+      </v-col>
     </v-row>
-    <!-- End: Page Content -->
   </v-container>
 </template>
-
 <script>
 export default {
-  name: "HomePage",
   data: () => ({
-    scaleCard: false,
-    services: [
-      {
-        icon: "mdi-content-cut",
-        title: "Detección de Etiquetas",
-        to: "/labels",
-        enabled: true,
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sapien ante, imperdiet consequat mauris sit amet, volutpat commodo risus."
-      },
-      {
-        icon: "mdi-content-cut",
-        title: "Detección de Tomas",
-        to: "/shot",
-        enabled: false,
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sapien ante, imperdiet consequat mauris sit amet, volutpat commodo risus.",
-      },
-      {
-        icon: "mdi-transcribe",
-        to: '/new-video',
-        title: "Transcripción a Texto",
-        enabled: false,
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sapien ante, imperdiet consequat mauris sit amet, volutpat commodo risus.",
-      },
-      {
-        icon: "mdi-cancel",
-        title: "Detectar contenido explicito",
-        to: '/new-video',
-        enabled: false,
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sapien ante, imperdiet consequat mauris sit amet, volutpat commodo risus.",
-      },
-      {
-        icon: "mdi-arrow-collapse",
-        title: "Redimensionar Video",
-        to: '/new-video',
-        enabled: false,
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sapien ante, imperdiet consequat mauris sit amet, volutpat commodo risus.",
-      },
-      {
-        icon: "mdi-face-man",
-        title: "Detectar rostros",
-        to: '/new-video',
-        enabled: false,
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sapien ante, imperdiet consequat mauris sit amet, volutpat commodo risus.",
-      },
-    ],
+    modalActive: false,
+    progressValue: 0,
+    file: null,
   }),
-  head() {
-    return {
-      title: "Inicio",
-    };
+  watch: {
+    progressValue(value) {
+      if (value >= 100.0) {
+        this.modalActive = false
+        this.resetInterval()
+      }
+    }
   },
-};
-</script>
+  methods: {
+    resetInterval() {
+      this.progressValue = 0
+    },
+    async onUploadFile(e) {
+      const file = e
+      let el = this;
+      const { signedUrl } = await this.$store.dispatch("gallery/getSignedURL", { video: file })
+      this.modalActive = true;
+      await this.$store.dispatch("gallery/uploadVideo", {
+        video: file, signedURL: signedUrl, onProgressCallback: (percentCompleted) => {
+          el.progressValue = percentCompleted
+        }
+      })
+      const { isConfirmed } = await this.$swal.fire({
+        title: "Your video is now uploaded to your gallery and being process", text: "Check the satus by clicking the following button.", confirmButtonText: "Go to the usage page", icon: "success"
+      })
+      if (isConfirmed) {
+        this.$router.push("/usage")
+      }
 
-<style scoped>
-.card-hover:hover {
-  transform: scale(1.02);
-  transition: all 0.3s ease;
+    }
+  }
+}
+</script>
+<style lang="scss">
+.swal2-styled.swal2-confirm {
+  background-color: #6200EE;
+}
+
+.container {
+  padding-top: 5vw;
+  text-align: center;
+
 }
 </style>

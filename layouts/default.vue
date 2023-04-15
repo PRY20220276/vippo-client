@@ -2,32 +2,75 @@
   <v-layout>
     <ClientOnly>
       <!-- Navigation -->
-      <v-navigation-drawer v-model="drawer" :temporary="isMobile">
+      <v-navigation-drawer v-model="drawer" :temporary="false">
         <v-list nav>
-          <v-list-item prepend-icon="mdi-view-dashboard-outline" title="Analyze Video" value="myfiles"
-            to="/"></v-list-item>
-          <v-list-item prepend-icon="mdi-folder-play-outline" title="Galería" value="shared" to="/gallery"
-            v-only-logged></v-list-item>
-          <v-list-item prepend-icon="mdi-account-credit-card-outline" v-only-logged title="Usage" value="usage"
-            to="/usage" class="title-bold"></v-list-item>
-          <v-list-item prepend-icon="mdi-account-circle-outline" title="Cuenta" value="starred" to="/account"
-            :active="$route.name === 'account'" v-only-logged class="title-bold"></v-list-item>
+          <v-list-item
+            prepend-icon="mdi-view-dashboard-outline"
+            title="New Video"
+            value="myfiles"
+            to="/"
+          ></v-list-item>
+          <v-list-item
+            prepend-icon="mdi-folder-play-outline"
+            title="Gallery"
+            value="shared"
+            to="/gallery"
+            v-only-logged
+          ></v-list-item>
+          <v-list-item
+            prepend-icon="mdi-account-credit-card-outline"
+            v-only-logged
+            title="Usage"
+            value="usage"
+            to="/usage"
+            class="title-bold"
+          ></v-list-item>
+          <v-list-item
+            prepend-icon="mdi-account-circle-outline"
+            title="Account"
+            value="starred"
+            to="/account"
+            :active="$route.name === 'account'"
+            v-only-logged
+            class="title-bold"
+          ></v-list-item>
         </v-list>
         <template v-slot:append>
           <v-list nav>
-            <v-list-item prepend-icon="mdi-xml" title="Playground" value="playground" to="/playground"></v-list-item>
+            <v-list-item
+              prepend-icon="mdi-xml"
+              title="Playground"
+              value="playground"
+              to="/playground"
+            ></v-list-item>
 
-            <v-list-item prepend-icon="mdi-lifebuoy" title="Support Center" value="help"></v-list-item>
+            <v-list-item
+              prepend-icon="mdi-lifebuoy"
+              title="Support Center"
+              value="help"
+            ></v-list-item>
 
-            <v-list-item class="text-red" prepend-icon="mdi-logout" v-only-logged title="Log out" @click="logout"
-              value="logout"></v-list-item>
+            <v-list-item
+              class="text-red"
+              prepend-icon="mdi-logout"
+              v-only-logged
+              title="Log out"
+              @click="logout"
+              value="logout"
+            ></v-list-item>
           </v-list>
         </template>
       </v-navigation-drawer>
       <!-- Application Bar -->
       <v-app-bar color="primary">
-        <v-app-bar-nav-icon color="white" @click="drawer = !drawer"></v-app-bar-nav-icon>
-        <v-app-bar-title class="text-center font-weight-bold" style="letter-spacing: 0.15em">VIPPO</v-app-bar-title>
+        <v-app-bar-nav-icon
+          color="white"
+          @click="drawer = !drawer"
+        ></v-app-bar-nav-icon>
+        <v-spacer></v-spacer>
+        <v-app-bar-title class="text-center font-weight-bold"
+          >VIPPO</v-app-bar-title
+        >
         <v-spacer></v-spacer>
         <SignIn v-if="!$store.getters['profile/getProfile'].logged" />
       </v-app-bar>

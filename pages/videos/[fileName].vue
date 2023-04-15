@@ -34,8 +34,9 @@
         <v-card>
           <v-tabs v-model="tab" bg-color="primary" color="white">
             <v-tab value="labels">Labels</v-tab>
-            <v-tab value="transcript">Transcript</v-tab>
+            <v-tab value="objects">Objects</v-tab>
             <v-tab value="summary">Summary</v-tab>
+            <v-tab value="explicit">Explicit</v-tab>
           </v-tabs>
 
           <v-card-text>
@@ -52,9 +53,17 @@
                 </ul>
               </v-window-item>
 
-              <v-window-item value="transcript"> Two </v-window-item>
+              <v-window-item value="objects">
+                {{ video.meta.objects || [] }}
+              </v-window-item>
 
-              <v-window-item value="summary"> Three </v-window-item>
+              <v-window-item value="summary">
+                {{ video.meta.summary || [] }}
+              </v-window-item>
+
+              <v-window-item value="explicit">
+                {{ video.meta.explicitContent || [] }}
+              </v-window-item>
             </v-window>
           </v-card-text>
         </v-card>

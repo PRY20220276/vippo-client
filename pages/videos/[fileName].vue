@@ -17,12 +17,28 @@
     <v-row v-if="video" class="mt-4">
       <v-col>
         <v-card color="black">
-          <video
-            :src="video.src"
-            controls
-            preload="metadata"
-            style="width: 100%; max-height: 100%"
-          ></video>
+          <div
+            :style="{
+              position: 'relative',
+              width: '100%',
+              paddingBottom: '56.25%',
+              overflow: 'hidden',
+            }"
+          >
+            <video
+              ref="videoElement"
+              :src="video.src"
+              controls
+              preload="metadata"
+              :style="{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+              }"
+            ></video>
+          </div>
         </v-card>
       </v-col>
     </v-row>
@@ -58,6 +74,13 @@
               </v-window-item>
 
               <v-window-item value="summary">
+                <v-btn @click="playSummary"
+                  >Play Summary {{ hightlight }}/{{
+                    video.meta.summary.length
+                  }}</v-btn
+                >
+
+                <br />
                 {{ video.meta.summary || [] }}
               </v-window-item>
 
@@ -93,6 +116,7 @@ export default {
   data: () => ({
     video: null,
     tab: null,
+    hightlight: 0,
   }),
   mounted() {
     this.fetchVideo();
@@ -114,6 +138,29 @@ export default {
         .catch(() => {
           this.$router.push("/gallery");
         });
+    },
+    playSummary() {
+      const videoElement = this.$refs.videoElement;
+      let currentClipIndex = 0;
+      this.hightlight = 0;
+
+      const playNextClip = () => {
+        if (currentClipIndex < this.video.meta.summary.length) {
+          const clip = this.video.meta.summary[currentClipIndex];
+          videoElement.currentTime = clip.startTime;
+          videoElement.play();
+          setTimeout(() => {
+            videoElement.pause();
+            currentClipIndex++;
+            this.hightlight += 1;
+            playNextClip();
+          }, (clip.endTime - clip.startTime) * 1000);
+        } else {
+          currentClipIndex = 0;
+        }
+      };
+
+      playNextClip();
     },
   },
 };

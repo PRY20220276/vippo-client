@@ -50,9 +50,11 @@
         <v-card>
           <v-tabs v-model="tab" bg-color="primary" color="white">
             <v-tab value="labels">Labels</v-tab>
-            <v-tab value="objects">Objects</v-tab>
-            <v-tab value="summary">Summary</v-tab>
-            <v-tab value="explicit">Explicit</v-tab>
+            <v-tab value="summary_object">Object Summary</v-tab>
+            <v-tab value="summary_transcript">Transcript Summary</v-tab>
+            <v-tab value="objects">Object Tracking</v-tab>
+            <v-tab value="explicit">Explicit Content</v-tab>
+            <v-tab value="transcript">Video Transcript</v-tab>
           </v-tabs>
 
           <v-card-text>
@@ -73,15 +75,20 @@
                 {{ video.meta.objects || [] }}
               </v-window-item>
 
-              <v-window-item value="summary">
-                <v-btn @click="playSummary"
-                  >Play Summary {{ hightlight }}/{{
-                    video.meta.summary.length
-                  }}</v-btn
-                >
-
+              <v-window-item value="summary_object">
+                <v-btn @click="playSummary">
+                  Play Summary {{ hightlight }}/{{ video.meta.summary.length }}
+                </v-btn>
                 <br />
                 {{ video.meta.summary || [] }}
+              </v-window-item>
+
+              <v-window-item value="summary_transcript">
+                <p>TODO</p>
+              </v-window-item>
+
+              <v-window-item value="explicit">
+                {{ video.meta.explicitContent || [] }}
               </v-window-item>
 
               <v-window-item value="explicit">

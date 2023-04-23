@@ -31,6 +31,7 @@
             <VideoPreview
               :key="v.url"
               :url="v.url"
+              :thumbnail="v.thumbnail"
               @onPlayBackError="(ev) => onHandleVideoPlayBackError(index)"
             />
             <template v-if="!v.hasError">

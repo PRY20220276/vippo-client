@@ -10,11 +10,14 @@
     <!-- End: Page Breadcrumbs -->
     <!-- Page Toolbar -->
     <v-toolbar color="background" class="text-primary mt-4">
-      <v-toolbar-title class="ml-1 text-h5">Video Details</v-toolbar-title>
+      <v-toolbar-title class="ml-1 text-h5"
+        ><v-icon icon="mdi-play-box-outline" size="small"></v-icon>
+        Video Playback
+      </v-toolbar-title>
     </v-toolbar>
     <!-- End: Page Toolbar -->
     <!-- Video Player Row -->
-    <v-row v-if="video" class="mt-4">
+    <v-row v-if="video">
       <v-col>
         <v-card color="black">
           <div
@@ -43,56 +46,148 @@
       </v-col>
     </v-row>
     <!-- End: Video Player Row -->
+    <v-toolbar color="background" class="text-primary mt-4">
+      <v-toolbar-title class="ml-1 text-h5">
+        <v-icon icon="mdi-television-guide" size="small"></v-icon>
+        Video Analysis</v-toolbar-title
+      >
+    </v-toolbar>
 
     <!-- Card Component Row -->
-    <v-row v-if="video && video.meta.processed" class="mt-4">
+    <v-row v-if="video && video.meta.processed">
       <v-col>
         <v-card>
           <v-tabs v-model="tab" bg-color="primary" color="white">
             <v-tab value="labels">Labels</v-tab>
-            <v-tab value="summary_object">Object Summary</v-tab>
-            <v-tab value="summary_transcript">Transcript Summary</v-tab>
             <v-tab value="objects">Object Tracking</v-tab>
             <v-tab value="explicit">Explicit Content</v-tab>
-            <v-tab value="transcript">Video Transcript</v-tab>
+            <v-tab value="transcript">Transcript</v-tab>
           </v-tabs>
 
           <v-card-text>
             <v-window v-model="tab">
               <v-window-item value="labels">
-                <ul>
-                  <li
-                    v-for="(label, index) in video.meta.labels"
+                <v-expansion-panels>
+                  <v-expansion-panel
+                    v-for="(obj, index) in video.meta.labels"
                     :key="index"
-                    class="text-subtitle-1 text-capitalize font-weight-bold"
                   >
-                    {{ label }}
-                  </li>
-                </ul>
+                    <v-expansion-panel-title
+                      class="text-capitalize font-weight-bold"
+                    >
+                      {{ obj.label }}
+                      <span class="ml-2 font-weight-light">
+                        {{ obj.segments.length }} segments</span
+                      >
+                    </v-expansion-panel-title>
+                    <v-expansion-panel-text>
+                      <v-chip-group>
+                        <v-chip
+                          v-for="(timestamp, index) in obj.segments"
+                          :key="index"
+                          @click="
+                            this.$refs.videoElement.currentTime =
+                              timestamp.startTime
+                          "
+                          >{{ timestamp.startTime }} -
+                          {{ timestamp.endTime }}</v-chip
+                        >
+                      </v-chip-group>
+                    </v-expansion-panel-text>
+                  </v-expansion-panel>
+                </v-expansion-panels>
               </v-window-item>
 
               <v-window-item value="objects">
-                {{ video.meta.objects || [] }}
+                <v-expansion-panels>
+                  <v-expansion-panel
+                    v-for="(obj, index) in video.meta.objects"
+                    :key="index"
+                  >
+                    <v-expansion-panel-title
+                      class="text-capitalize font-weight-bold"
+                    >
+                      {{ obj.name }}
+                      <span class="ml-2 font-weight-light">
+                        {{ obj.timestamps.length }} timestamps</span
+                      >
+                    </v-expansion-panel-title>
+                    <v-expansion-panel-text>
+                      <v-chip-group>
+                        <v-chip
+                          v-for="(timestamp, index) in obj.timestamps"
+                          :key="index"
+                          @click="
+                            this.$refs.videoElement.currentTime =
+                              timestamp.startTime
+                          "
+                          >{{ timestamp.startTime }} -
+                          {{ timestamp.endTime }}</v-chip
+                        >
+                      </v-chip-group>
+                    </v-expansion-panel-text>
+                  </v-expansion-panel>
+                </v-expansion-panels>
               </v-window-item>
 
+              <v-window-item value="explicit">
+                {{ video.meta.explicitContent || [] }}
+                <v-expansion-panels>
+                  <v-expansion-panel
+                    title="Title"
+                    text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, ratione debitis quis est labore voluptatibus! Eaque cupiditate minima"
+                  >
+                  </v-expansion-panel>
+                </v-expansion-panels>
+              </v-window-item>
+
+              <v-window-item value="transcript">
+                {{ video.meta.transcript || [] }}
+              </v-window-item>
+            </v-window>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row v-else class="mt-4">
+      <v-col>
+        <v-alert
+          type="info"
+          title="Analysis Not Found"
+          text="This means that your video is still being processed in the backend. Please return later to see the results."
+          variant="tonal"
+        ></v-alert>
+      </v-col>
+    </v-row>
+    <v-toolbar color="background" class="text-primary mt-4">
+      <v-toolbar-title class="ml-1 text-h5">
+        <v-icon icon="mdi-content-cut" size="small"></v-icon>
+        Video Summarization</v-toolbar-title
+      >
+    </v-toolbar>
+
+    <!-- Card Component Row -->
+    <v-row v-if="video && video.meta.processed">
+      <v-col>
+        <v-card>
+          <v-tabs v-model="tabSummary" bg-color="primary" color="white">
+            <v-tab value="summary_object">Summary #1 (Objects)</v-tab>
+            <v-tab value="summary_transcript">Summary #2 (Transcript)</v-tab>
+          </v-tabs>
+          <v-card-text>
+            <v-window v-model="tabSummary">
               <v-window-item value="summary_object">
                 <v-btn @click="playSummary">
-                  Play Summary {{ hightlight }}/{{ video.meta.summary.length }}
+                  Play Summary {{ hightlight }}/{{
+                    video.meta.objectSummary.length
+                  }}
                 </v-btn>
                 <br />
-                {{ video.meta.summary || [] }}
+                {{ video.meta.objectSummary || [] }}
               </v-window-item>
 
               <v-window-item value="summary_transcript">
                 <p>TODO</p>
-              </v-window-item>
-
-              <v-window-item value="explicit">
-                {{ video.meta.explicitContent || [] }}
-              </v-window-item>
-
-              <v-window-item value="explicit">
-                {{ video.meta.explicitContent || [] }}
               </v-window-item>
             </v-window>
           </v-card-text>
@@ -123,6 +218,7 @@ export default {
   data: () => ({
     video: null,
     tab: null,
+    tabSummary: null,
     hightlight: 0,
   }),
   mounted() {
@@ -152,8 +248,8 @@ export default {
       this.hightlight = 0;
 
       const playNextClip = () => {
-        if (currentClipIndex < this.video.meta.summary.length) {
-          const clip = this.video.meta.summary[currentClipIndex];
+        if (currentClipIndex < this.video.meta.objectSummary.length) {
+          const clip = this.video.meta.objectSummary[currentClipIndex];
           videoElement.currentTime = clip.startTime;
           videoElement.play();
           setTimeout(() => {

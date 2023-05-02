@@ -1,9 +1,7 @@
 <template>
   <div>
     <div ref="container" class="d-none" :style="style"></div>
-    <div
-      ref="preview_empty"
-      :style="{
+    <div ref="preview_empty" :style="{
         width: '100%',
         height: '300px',
         backgroundColor: 'gray',
@@ -11,8 +9,7 @@
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-      }"
-    >
+      }">
       <v-icon color="black" icon="mdi-video-box" size="80px"> </v-icon>
       <p class="text-black" v-if="error">{{ error }}</p>
     </div>
@@ -62,7 +59,6 @@ export default {
       const videoPreview = document.createElement("video");
       videoPreview.src = this.fallback;
       videoPreview.controls = true;
-      videoPreview.poster = this.thumbnail;
       videoPreview.style.objectFit = "contain";
       videoPreview.style.width = "100%";
       videoPreview.style.height = "100%";
@@ -72,7 +68,6 @@ export default {
         videoPreview.load(); // Reload the video element with the new source
       };
       videoPreview.addEventListener("error", (event) => {
-        console.log(event);
         if (this.url) {
           el.error = "No se puede reproducir el video";
           this.$emit("onPlayBackError", event);

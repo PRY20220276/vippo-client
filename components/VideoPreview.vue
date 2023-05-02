@@ -29,6 +29,10 @@ export default {
       type: String,
       default: "",
     },
+    fallback: {
+      type: String,
+      default: "",
+    },
   },
   data: () => ({
     error: null,
@@ -62,9 +66,15 @@ export default {
       videoPreview.style.objectFit = "contain";
       videoPreview.style.width = "100%";
       videoPreview.style.height = "100%";
+      const handleFallback = () => {
+        const fallbackUrl = this.fallback;
+        videoPreview.src = fallbackUrl;
+        videoPreview.load(); // Reload the video element with the new source
+      };
       videoPreview.addEventListener("error", (event) => {
         console.log(event);
         if (this.url) {
+          videoPreview.src = this.fallback;
           el.error = "No se puede reproducir el video";
           this.$emit("onPlayBackError", event);
         }

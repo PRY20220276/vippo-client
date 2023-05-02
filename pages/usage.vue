@@ -1,16 +1,18 @@
 <template>
   <v-container fluid>
     <!-- Page Breadcrumbs -->
-    <v-breadcrumbs :items="['VIPPO', 'Billing']" bg-color="indigo-lighten-5" class="text-body-2">
+    <v-breadcrumbs
+      :items="['VIPPO', 'Billing']"
+      bg-color="indigo-lighten-5"
+      class="text-body-2"
+    >
     </v-breadcrumbs>
     <!-- End: Page Breadcrumbs -->
     <!-- Page Toolbar -->
     <v-toolbar color="background" class="text-primary mt-4">
       <v-toolbar-title class="ml-1 text-h5">Billing</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn prepend-icon="mdi-rotate-right" variant="outlined">
-        Change
-      </v-btn>
+      <v-btn prepend-icon="mdi-rotate-right" variant="outlined"> Change </v-btn>
     </v-toolbar>
     <!-- End: Page Toolbar -->
     <ClientOnly>
@@ -20,8 +22,12 @@
             <v-card-title>Storage Status</v-card-title>
             <v-card-text>
               <v-row>
-                <v-col style="text-align: center;">
-                  <v-progress-circular v-model="consumedStorage" color="primary" size="60"></v-progress-circular>
+                <v-col style="text-align: center">
+                  <v-progress-circular
+                    v-model="consumedStorage"
+                    color="primary"
+                    size="60"
+                  ></v-progress-circular>
                 </v-col>
                 <v-col>
                   <p>Capacity: {{ capacity }}</p>
@@ -33,21 +39,19 @@
         </v-col>
       </v-row>
       <div class="mt-6">
-        <div class="text-h5 text-primary">Videos en cola</div>
+        <div class="text-h5 text-primary">Processing Queue</div>
         <div class="mt-5">
-          <ScheduledVideo class="my-2" title="Romeo Santos.mp4" :services="['labeling']" createdAt="03/12/2022 13:34">
+          <ScheduledVideo
+            v-for="(video, index) in queue"
+            :key="index"
+            class="my-2"
+            :title="video.name"
+            :createdAt="video.createdAt"
+            :services="['Video Analysis and Summary']"
+          >
           </ScheduledVideo>
-          <ScheduledVideo class="my-2" title="Romeo Santos.mp4" :services="['labeling']" createdAt="03/12/2022 13:34">
-          </ScheduledVideo>
-          <ScheduledVideo class="my-2" title="Romeo Santos.mp4" :services="['labeling']" createdAt="03/12/2022 13:34">
-          </ScheduledVideo>
-
         </div>
-
       </div>
-
-
-
     </ClientOnly>
   </v-container>
 </template>
@@ -58,14 +62,30 @@ export default {
   data: () => ({
     consumedStorage: 0,
     capacity: "",
-    used: ""
-
+    used: "",
+    queue: [],
   }),
   async beforeMount() {
-    const response = await this.$store.dispatch("gallery/getStats")
-    this.consumedStorage = (response.totalStorageUsed / response.maxStorageSize) * 100
+    const response = await this.$store.dispatch("gallery/getStats");
+    this.consumedStorage =
+      (response.totalStorageUsed / response.maxStorageSize) * 100;
     this.used = response.usedGB;
     this.capacity = response.maxGB;
-  }
+    this.fetchProcessingVids()
+  },
+  methods: {
+    fetchProcessingVids() {
+      $fetch(`https://api.vippo.space/v1/me/videos?filterBy=processing`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token") ?? ""}`,
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          this.queue = res.items;
+        })
+        .catch(() => {});
+    },
+  },
 };
 </script>

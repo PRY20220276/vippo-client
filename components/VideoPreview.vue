@@ -60,7 +60,7 @@ export default {
     buildPreview() {
       let el = this;
       const videoPreview = document.createElement("video");
-      videoPreview.src = this.url;
+      videoPreview.src = this.fallback;
       videoPreview.controls = true;
       videoPreview.poster = this.thumbnail;
       videoPreview.style.objectFit = "contain";
@@ -74,7 +74,6 @@ export default {
       videoPreview.addEventListener("error", (event) => {
         console.log(event);
         if (this.url) {
-          videoPreview.src = this.fallback;
           el.error = "No se puede reproducir el video";
           this.$emit("onPlayBackError", event);
         }

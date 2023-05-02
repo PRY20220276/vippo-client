@@ -30,7 +30,7 @@
           >
             <video
               ref="videoElement"
-              :src="video.src"
+              :src="video.downloadPath"
               controls
               preload="metadata"
               :style="{

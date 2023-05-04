@@ -1,13 +1,13 @@
 <template>
     <v-form ref="form" lazy-validation>
         <v-text-field label="Email" color="primary" v-model="email" :rules="rules"></v-text-field>
-        <v-text-field label="Contraseña" color="primary" v-model="password" type="password"
+        <v-text-field label="Password" color="primary" v-model="password" type="password"
             :rules="passwordRules"></v-text-field>
 
     </v-form>
-    <v-btn color="primary" block class="my-2" rounded="lg" variant="flat" @click.stop="onClick">Continuar</v-btn>
+    <v-btn color="primary" block class="my-2" rounded="lg" variant="flat" @click.stop="onClick">Continue</v-btn>
     <v-btn color="gray" block class="my-2" rounded="lg" variant="flat"
-        @click.stop="$store.dispatch('login/backPage')">Cancelar</v-btn>
+        @click.stop="$store.dispatch('login/backPage')">Cancel</v-btn>
 </template>
 <script >
 export default {

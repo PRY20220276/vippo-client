@@ -4,14 +4,16 @@
 
     <v-breadcrumbs
       :items="['VIPPO', 'Gallery']"
-      bg-color="indigo-lighten-5"
-      class="text-body-2"
+      bg-color="#293040ff"
+      class="text-body-2 text-white"
     ></v-breadcrumbs>
     <!-- End: Page Breadcrumbs -->
     <!-- Page Toolbar -->
     <ClientOnly>
       <v-toolbar color="background" class="text-primary mt-4">
-        <v-toolbar-title class="ml-1 text-h5">Gallery</v-toolbar-title>
+        <v-toolbar-title class="ml-1 text-h5 font-weight-bold text-white"
+          >Gallery</v-toolbar-title
+        >
       </v-toolbar>
       <!-- End: Page Toolbar -->
 
@@ -27,18 +29,27 @@
           cols="12"
           sm="4"
         >
-          <v-card>
+          <v-card
+            variant="tonal"
+            @click="$router.push(`/videos/${v.name}`)"
+            class="zoom-on-hover"
+          >
             <VideoPreview
               :key="v.url"
               :url="v.url"
+              ref="videoPreviewComponent"
               :thumbnail="v.thumbnail"
               :fallback="v.downloadPath"
               @onPlayBackError="(ev) => onHandleVideoPlayBackError(index)"
             />
             <template v-if="!v.hasError">
-              <v-card-title>
+              <v-card-title class="text-subtitle-1 font-weight-bold">
                 {{ v.name }}
               </v-card-title>
+              <v-card-subtitle class="mb-3">
+                {{ v.createdAt }}
+              </v-card-subtitle>
+              <!--
               <v-card-actions>
                 <v-btn
                   density="comfortable"
@@ -46,9 +57,8 @@
                   @click="$router.push(`/videos/${v.name}`)"
                   >Details</v-btn
                 >
-                <!--
-                <VideoGalleryModal :videoIndex="index"></VideoGalleryModal>-->
               </v-card-actions>
+              -->
             </template>
           </v-card>
         </v-col>
@@ -105,6 +115,12 @@ export default {
         this.fetch = "error";
       }
       return resp;
+    },
+    playVideo() {
+      this.$refs.videoPreviewComponent.playVideo();
+    },
+    pauseVideo() {
+      this.$refs.videoPreviewComponent.pauseVideo();
     },
     onHandleVideoPlayBackError(videoId) {
       this.$store.commit("gallery/setVideoPlaybackError", videoId);

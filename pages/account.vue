@@ -1,7 +1,11 @@
 <template>
   <v-container fluid>
     <!-- Page Breadcrumbs -->
-    <v-breadcrumbs :items="['VIPPO', 'Account']" bg-color="indigo-lighten-5" class="text-body-2"></v-breadcrumbs>
+    <v-breadcrumbs
+      :items="['VIPPO', 'Account']"
+      bg-color="#293040ff"
+      class="text-body-2 text-white"
+    ></v-breadcrumbs>
     <!-- End: Page Breadcrumbs -->
     <!-- Page Toolbar -->
     <v-toolbar color="background" class="text-primary mt-4">
@@ -10,7 +14,11 @@
     <!-- End: Page Toolbar -->
     <!-- Personal Details -->
     <client-only>
-      <v-card class="mt-4" prepend-icon="mdi-account-outline" title="Personal Details">
+      <v-card
+        class="mt-4"
+        prepend-icon="mdi-account-outline"
+        title="Personal Details"
+      >
         <v-form ref="form" @submit.prevent="submitProfile" validate-on="submit">
           <v-container>
             <v-row>
@@ -19,8 +27,11 @@
               </v-col>
 
               <v-col cols="8">
-                <v-text-field label="First Name" v-model="firstname"
-                  :rules="[v => !!v || 'El nombre es obligatorio']"></v-text-field>
+                <v-text-field
+                  label="First Name"
+                  v-model="firstname"
+                  :rules="[(v) => !!v || 'El nombre es obligatorio']"
+                ></v-text-field>
               </v-col>
             </v-row>
 
@@ -30,8 +41,11 @@
               </v-col>
 
               <v-col cols="8">
-                <v-text-field label="Last Name" v-model="lastname"
-                  :rules="[v => !!v || 'El apellido es obligatorio']"></v-text-field>
+                <v-text-field
+                  label="Last Name"
+                  v-model="lastname"
+                  :rules="[(v) => !!v || 'El apellido es obligatorio']"
+                ></v-text-field>
               </v-col>
             </v-row>
 
@@ -41,14 +55,22 @@
               </v-col>
 
               <v-col cols="8">
-                <v-text-field label="Email Address" :model-value="$store.getters['profile/getProfile'].email"
-                  disabled></v-text-field>
+                <v-text-field
+                  label="Email Address"
+                  :model-value="$store.getters['profile/getProfile'].email"
+                  disabled
+                ></v-text-field>
               </v-col>
             </v-row>
           </v-container>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn variant="outlined" class="px-5" type="submit" prepend-icon="mdi-content-save-move-outline">Save
+            <v-btn
+              variant="outlined"
+              class="px-5"
+              type="submit"
+              prepend-icon="mdi-content-save-move-outline"
+              >Save
             </v-btn>
           </v-card-actions>
         </v-form>
@@ -59,33 +81,32 @@
 
 <script setup>
 definePageMeta({
-  middleware: 'check-auth'
-})
+  middleware: "check-auth",
+});
 </script>
 <script>
 export default {
   name: "AccountPage",
   data: () => ({
-    firstname: '',
-    lastname: ''
+    firstname: "",
+    lastname: "",
   }),
   beforeMount() {
-    this.firstname = this.$store.getters['profile/getProfile'].firstname
-    this.lastname = this.$store.getters['profile/getProfile'].lastname
+    this.firstname = this.$store.getters["profile/getProfile"].firstname;
+    this.lastname = this.$store.getters["profile/getProfile"].lastname;
   },
   methods: {
     async submitProfile() {
-      const { valid } = await this.$refs.form.validate()
+      const { valid } = await this.$refs.form.validate();
       if (!valid) {
-        return
+        return;
       }
       this.$store.dispatch("profile/updateProfile", {
         firstname: this.firstname,
-        email: this.$store.getters['profile/getProfile'].email,
-        lastname: this.lastname
-      })
-
-    }
-  }
+        email: this.$store.getters["profile/getProfile"].email,
+        lastname: this.lastname,
+      });
+    },
+  },
 };
 </script>

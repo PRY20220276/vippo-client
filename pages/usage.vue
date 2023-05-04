@@ -3,8 +3,8 @@
     <!-- Page Breadcrumbs -->
     <v-breadcrumbs
       :items="['VIPPO', 'Billing']"
-      bg-color="indigo-lighten-5"
-      class="text-body-2"
+      bg-color="#293040ff"
+      class="text-body-2 text-white"
     >
     </v-breadcrumbs>
     <!-- End: Page Breadcrumbs -->
@@ -71,7 +71,7 @@ export default {
       (response.totalStorageUsed / response.maxStorageSize) * 100;
     this.used = response.usedGB;
     this.capacity = response.maxGB;
-    this.fetchProcessingVids()
+    this.fetchProcessingVids();
   },
   methods: {
     fetchProcessingVids() {

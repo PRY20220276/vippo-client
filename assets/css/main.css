@@ -1,0 +1,19 @@
+html,
+body,
+body * {
+  font-family: "Inter", sans-serif !important;
+}
+
+/* Increase specificity to override Vuetify's styles */
+body .v-application .v-application--wrap * {
+  font-family: "Inter", sans-serif !important;
+}
+
+.zoom-on-hover {
+  transition: transform 0.3s ease;
+}
+
+.zoom-on-hover:hover {
+  transform: scale(1.02);
+  cursor: pointer;
+}

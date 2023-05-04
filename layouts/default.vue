@@ -2,11 +2,11 @@
   <v-layout>
     <ClientOnly>
       <!-- Navigation -->
-      <v-navigation-drawer v-model="drawer" :temporary="false">
+      <v-navigation-drawer v-model="drawer" :temporary="false" color="surface">
         <v-list nav>
           <v-list-item
-            prepend-icon="mdi-view-dashboard-outline"
-            title="New Video"
+            prepend-icon="mdi-cloud-upload-outline"
+            title="Upload a video"
             value="myfiles"
             to="/"
           ></v-list-item>
@@ -18,9 +18,9 @@
             v-only-logged
           ></v-list-item>
           <v-list-item
-            prepend-icon="mdi-account-credit-card-outline"
+            prepend-icon="mdi-chart-box-outline"
             v-only-logged
-            title="Usage"
+            title="Usage & statistics"
             value="usage"
             to="/usage"
             class="title-bold"
@@ -62,17 +62,21 @@
         </template>
       </v-navigation-drawer>
       <!-- Application Bar -->
-      <v-app-bar color="primary">
+      <v-app-bar
+        style="background: linear-gradient(45deg, #6200ee, #7b1fa2)"
+        :elevation="11"
+      >
         <v-app-bar-nav-icon
           color="white"
+          :icon="drawer ? 'mdi-menu-open' : 'mdi-menu'"
           @click="drawer = !drawer"
         ></v-app-bar-nav-icon>
-        <v-spacer></v-spacer>
-        <v-app-bar-title class="text-center font-weight-bold"
-          >VIPPO</v-app-bar-title
-        >
-        <v-spacer></v-spacer>
-        <SignIn v-if="!$store.getters['profile/getProfile'].logged" />
+        <v-app-bar-title class="font-weight-bold text-center">
+          VIPPO
+        </v-app-bar-title>
+        <template v-slot:append>
+          <SignIn v-if="!$store.getters['profile/getProfile'].logged" />
+        </template>
       </v-app-bar>
 
       <!-- Main Content -->

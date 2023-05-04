@@ -16,7 +16,7 @@
           ></v-btn>
         </div>
         <v-card-title>
-          <div class="text-h5 font-weight-bold">Iniciar Sesión</div>
+          <div class="text-h5 font-weight-bold">Welcome back</div>
         </v-card-title>
         <v-card-text>
           <component

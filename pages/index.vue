@@ -6,7 +6,7 @@
   >
     <v-card>
       <v-card-title>
-        <h4 class="text-primary">Subiendo video</h4>
+        <h4 class="text-primary">Uploading video</h4>
       </v-card-title>
       <v-card-text style="margin-bottom: 15px">
         <div>

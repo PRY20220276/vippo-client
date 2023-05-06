@@ -9,7 +9,9 @@
     <!-- End: Page Breadcrumbs -->
     <!-- Page Toolbar -->
     <v-toolbar color="background" class="text-primary mt-4">
-      <v-toolbar-title class="ml-1 text-h5">Account</v-toolbar-title>
+      <v-toolbar-title class="ml-1 text-h5 font-weight-bold text-white">
+        Account
+      </v-toolbar-title>
     </v-toolbar>
     <!-- End: Page Toolbar -->
     <!-- Personal Details -->

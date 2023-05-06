@@ -10,7 +10,9 @@
     <!-- End: Page Breadcrumbs -->
     <!-- Page Toolbar -->
     <v-toolbar color="background" class="text-primary mt-4">
-      <v-toolbar-title class="ml-1 text-h5">Billing</v-toolbar-title>
+      <v-toolbar-title class="ml-1 text-h5 font-weight-bold text-white"
+        >Usage</v-toolbar-title
+      >
       <v-spacer></v-spacer>
       <v-btn prepend-icon="mdi-rotate-right" variant="outlined"> Change </v-btn>
     </v-toolbar>
@@ -39,7 +41,11 @@
         </v-col>
       </v-row>
       <div class="mt-6">
-        <div class="text-h5 text-primary">Processing Queue</div>
+        <v-toolbar color="background" class="text-primary mt-4">
+          <v-toolbar-title class="ml-1 text-h5 font-weight-bold text-white"
+            >Processing Queue</v-toolbar-title
+          >
+        </v-toolbar>
         <div class="mt-5">
           <ScheduledVideo
             v-for="(video, index) in queue"

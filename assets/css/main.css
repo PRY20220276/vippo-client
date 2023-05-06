@@ -17,3 +17,15 @@ body .v-application .v-application--wrap * {
   transform: scale(1.02);
   cursor: pointer;
 }
+
+.sticky-video {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.fit-video {
+  width: 100%;
+  height: auto;
+  display: block;
+}

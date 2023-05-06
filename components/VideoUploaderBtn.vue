@@ -32,7 +32,7 @@
     <v-btn
       style="background: linear-gradient(45deg, #6200ee, #7b1fa2)"
       prepend-icon="mdi-tray-arrow-up"
-      size="large"
+      size="x-large"
       class="mt-4"
       :loading="isSelecting"
       @click="onBtnClick"
@@ -117,4 +117,5 @@ export default {
   position: relative;
   z-index: 1;
 }
+
 </style>

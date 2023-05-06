@@ -10,8 +10,8 @@
     <!-- End: Page Breadcrumbs -->
     <!-- Page Toolbar -->
     <v-toolbar color="background" class="text-primary mt-4">
-      <v-toolbar-title class="ml-1 text-h5"
-        ><v-icon icon="mdi-play-box-outline" size="small"></v-icon>
+      <v-toolbar-title class="ml-1 text-h5 font-weight-bold text-white">
+        <v-icon icon="mdi-video" size="small" left></v-icon>
         Video Playback
       </v-toolbar-title>
     </v-toolbar>
@@ -20,45 +20,29 @@
     <v-row v-if="video">
       <v-col>
         <v-card color="black">
-          <div
-            :style="{
-              position: 'relative',
-              width: '100%',
-              paddingBottom: '56.25%',
-              overflow: 'hidden',
-            }"
-          >
-            <video
-              ref="videoElement"
-              :src="video.downloadPath"
-              controls
-              preload="metadata"
-              :style="{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-              }"
-            ></video>
-          </div>
+          <video
+            ref="videoElement"
+            :src="video.downloadPath"
+            controls
+            class="fit-video"
+          ></video>
         </v-card>
       </v-col>
     </v-row>
     <v-toolbar color="background" class="text-primary mt-4">
-      <v-toolbar-title class="ml-1 text-h5">
-        <v-icon icon="mdi-content-cut" size="small"></v-icon>
-        Video Summarization</v-toolbar-title
-      >
+      <v-toolbar-title class="ml-1 text-h5 font-weight-bold text-white">
+        <v-icon icon="mdi-content-cut" size="small" left></v-icon>
+        Video Summarization
+      </v-toolbar-title>
     </v-toolbar>
-
     <!-- Card Component Row -->
     <v-row v-if="video && video.meta.processed">
       <v-col>
-        <v-card>
+        <v-card variant="tonal">
           <v-tabs v-model="tabSummary" bg-color="primary" color="white">
-            <v-tab value="summary_transcript">Summary #1 (Podcast)</v-tab>
-            <v-tab value="summary_object">Summary #2 (Scene)</v-tab>
+            <v-tab value="summary_transcript">Podcast Summary</v-tab>
+            <v-tab value="summary_object">Scene Summary</v-tab>
+            <v-tab value="custom_summary">Custom Summary</v-tab>
           </v-tabs>
           <v-card-text>
             <v-window v-model="tabSummary">
@@ -108,16 +92,16 @@
     </v-row>
     <!-- End: Video Player Row -->
     <v-toolbar color="background" class="text-primary mt-4">
-      <v-toolbar-title class="ml-1 text-h5">
-        <v-icon icon="mdi-television-guide" size="small"></v-icon>
-        Video Analysis</v-toolbar-title
-      >
+      <v-toolbar-title class="ml-1 text-h5 font-weight-bold text-white">
+        <v-icon icon="mdi-television-guide" size="small" left></v-icon>
+        Video Analysis
+      </v-toolbar-title>
     </v-toolbar>
 
     <!-- Card Component Row -->
     <v-row v-if="video && video.meta.processed">
       <v-col>
-        <v-card>
+        <v-card variant="tonal">
           <v-tabs v-model="tab" bg-color="primary" color="white">
             <v-tab value="labels">Labels</v-tab>
             <v-tab value="objects">Object Tracking</v-tab>
@@ -145,11 +129,10 @@
                           v-for="(timestamp, index) in obj.segments"
                           :key="index"
                           @click="
-                            this.$refs.videoElement.currentTime =
-                              timestamp.startTime
+                            $refs.videoElement.currentTime = timestamp.startTime
                           "
-                          >{{ timestamp.startTime }} -
-                          {{ timestamp.endTime }}</v-chip
+                          >{{ secondsToTimestamp(timestamp.startTime) }} -
+                          {{ secondsToTimestamp(timestamp.endTime) }}</v-chip
                         >
                       </v-chip-group>
                     </v-expansion-panel-text>
@@ -177,11 +160,10 @@
                           v-for="(timestamp, index) in obj.timestamps"
                           :key="index"
                           @click="
-                            this.$refs.videoElement.currentTime =
-                              timestamp.startTime
+                            $refs.videoElement.currentTime = timestamp.startTime
                           "
-                          >{{ timestamp.startTime }} -
-                          {{ timestamp.endTime }}</v-chip
+                          >{{ secondsToTimestamp(timestamp.startTime) }} -
+                          {{ secondsToTimestamp(timestamp.endTime) }}</v-chip
                         >
                       </v-chip-group>
                     </v-expansion-panel-text>
@@ -239,7 +221,13 @@ export default {
   mounted() {
     this.fetchVideo();
   },
+  computed: {},
   methods: {
+    secondsToTimestamp(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = Math.floor(seconds % 60);
+      return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
+    },
     moveToNewSummarizationPage() {
       this.$router.push(`${this.$route.params["fileName"]}/new-summarization`);
     },

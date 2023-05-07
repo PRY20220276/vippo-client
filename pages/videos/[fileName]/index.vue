@@ -15,6 +15,8 @@
         Video Playback
       </v-toolbar-title>
     </v-toolbar>
+    <v-divider class="mb-3"></v-divider>
+
     <!-- End: Page Toolbar -->
     <!-- Video Player Row -->
     <v-row v-if="video">
@@ -34,10 +36,15 @@
         <v-icon icon="mdi-content-cut" size="small" left></v-icon>
         Video Summarization
       </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn icon color="secondary" @click="hideSummary = !hideSummary" size="small">
+        <v-icon>{{ hideSummary ? "mdi-eye-off-outline" : "mdi-eye" }}</v-icon>
+      </v-btn>
     </v-toolbar>
+    <v-divider class="mb-3"></v-divider>
     <!-- Card Component Row -->
     <v-row v-if="video && video.meta.processed">
-      <v-col>
+      <v-col v-if="!hideSummary">
         <v-card variant="tonal">
           <v-tabs v-model="tabSummary" bg-color="primary" color="white">
             <v-tab value="summary_transcript">Podcast Summary</v-tab>
@@ -46,6 +53,46 @@
           </v-tabs>
           <v-card-text>
             <v-window v-model="tabSummary">
+              <v-window-item value="summary_transcript">
+                <v-row>
+                  <v-col>
+                    <video
+                      controls
+                      style="object-fit: contain; width: 100%; height: 100%"
+                      src="https://storage.cloud.google.com/vippo-video-maker/podcast-podcast_auto_summarization.mp4/sd.mp4"
+                    ></video>
+                  </v-col>
+                </v-row>
+                <v-row justify="center" align="center" class="mb-3">
+                  <v-col cols="auto">
+                    <v-btn
+                      color="primary"
+                      prepend-icon="mdi-download"
+                      density="comfortable"
+                    >
+                      Download video
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="auto">
+                    <v-btn
+                      color="#1877F2"
+                      prepend-icon="mdi-facebook"
+                      density="comfortable"
+                    >
+                      Share on Facebook
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="auto">
+                    <v-btn
+                      color="#E1306C"
+                      prepend-icon="mdi-instagram"
+                      density="comfortable"
+                    >
+                      Share on Instagram
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-window-item>
               <v-window-item value="summary_object">
                 <v-btn @click="playSummary">
                   Play Summary {{ hightlight }}/{{
@@ -55,25 +102,16 @@
                 <br />
                 {{ video.meta.objectSummary || [] }}
               </v-window-item>
-
-              <v-window-item value="summary_transcript">
-                <v-row justify="end">
-                  <v-col>
+              <v-window-item value="custom_summary">
+                <v-row justify="center" align="center" class="my-5">
+                  <v-col cols="auto">
                     <v-btn
-                      size="small"
                       prepend-icon="mdi-auto-fix"
                       @click="() => moveToNewSummarizationPage()"
                       >Create custom summary</v-btn
                     >
                   </v-col>
                 </v-row>
-                <div style="width: 100%; height: 300px">
-                  <video
-                    controls
-                    style="object-fit: contain; width: 100%; height: 100%"
-                    src="https://storage.cloud.google.com/vippo-video-maker/podcast-podcast_auto_summarization.mp4/sd.mp4"
-                  ></video>
-                </div>
               </v-window-item>
             </v-window>
           </v-card-text>
@@ -96,11 +134,16 @@
         <v-icon icon="mdi-television-guide" size="small" left></v-icon>
         Video Analysis
       </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn icon color="secondary" @click="hideAnalysis = !hideAnalysis" size="small">
+        <v-icon>{{ hideAnalysis ? "mdi-eye-off-outline" : "mdi-eye" }}</v-icon>
+      </v-btn>
     </v-toolbar>
+    <v-divider class="mb-3"></v-divider>
 
     <!-- Card Component Row -->
     <v-row v-if="video && video.meta.processed">
-      <v-col>
+      <v-col v-if="!hideAnalysis">
         <v-card variant="tonal">
           <v-tabs v-model="tab" bg-color="primary" color="white">
             <v-tab value="labels">Labels</v-tab>
@@ -217,6 +260,8 @@ export default {
     tab: null,
     tabSummary: "summary_transcript",
     hightlight: 0,
+    hideSummary: false,
+    hideAnalysis: false,
   }),
   mounted() {
     this.fetchVideo();

@@ -1,6 +1,12 @@
 <template>
   <div>
-    <div ref="container" class="d-none" :style="style"></div>
+    <div
+      ref="container"
+      class="d-none"
+      :style="style"
+      @mouseenter="playVideo"
+      @mouseleave="pauseVideo"
+    ></div>
     <div
       ref="preview_empty"
       :style="{
@@ -61,12 +67,11 @@ export default {
       let el = this;
       const videoPreview = document.createElement("video");
       videoPreview.src = this.fallback;
-      videoPreview.controls = true;
       videoPreview.style.objectFit = "contain";
       videoPreview.style.width = "100%";
       videoPreview.style.height = "100%";
       videoPreview.ref = "videoPreview"; // Add the ref attribute to the video element
-
+      videoPreview.muted = true;
       videoPreview.addEventListener("error", (event) => {
         if (this.url) {
           el.error = "No se puede reproducir el video";
@@ -80,6 +85,13 @@ export default {
         this.$refs["container"].appendChild(videoPreview);
         this.$refs["preview_empty"].classList.add("d-none");
         this.$refs["container"].classList.remove("d-none");
+      });
+      videoPreview.addEventListener("mouseover", () => {
+        videoPreview.play();
+      });
+
+      videoPreview.addEventListener("mouseout", () => {
+        videoPreview.pause();
       });
     },
     playVideo() {

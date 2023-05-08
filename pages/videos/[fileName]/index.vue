@@ -37,7 +37,12 @@
         Video Summarization
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn icon color="secondary" @click="hideSummary = !hideSummary" size="small">
+      <v-btn
+        icon
+        color="secondary"
+        @click="hideSummary = !hideSummary"
+        size="small"
+      >
         <v-icon>{{ hideSummary ? "mdi-eye-off-outline" : "mdi-eye" }}</v-icon>
       </v-btn>
     </v-toolbar>
@@ -135,7 +140,12 @@
         Video Analysis
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn icon color="secondary" @click="hideAnalysis = !hideAnalysis" size="small">
+      <v-btn
+        icon
+        color="secondary"
+        @click="hideAnalysis = !hideAnalysis"
+        size="small"
+      >
         <v-icon>{{ hideAnalysis ? "mdi-eye-off-outline" : "mdi-eye" }}</v-icon>
       </v-btn>
     </v-toolbar>
@@ -149,6 +159,8 @@
             <v-tab value="labels">Labels</v-tab>
             <v-tab value="objects">Object Tracking</v-tab>
             <v-tab value="explicit">Explicit Content</v-tab>
+            <v-spacer></v-spacer>
+            <v-tab value="debug">Debug</v-tab>
           </v-tabs>
           <v-card-text>
             <v-window v-model="tab">
@@ -194,7 +206,7 @@
                     >
                       {{ obj.name }}
                       <span class="ml-2 font-weight-light">
-                        {{ obj.timestamps.length }} timestamps</span
+                        {{ obj.timestamps.length }} segments</span
                       >
                     </v-expansion-panel-title>
                     <v-expansion-panel-text>
@@ -215,18 +227,26 @@
               </v-window-item>
 
               <v-window-item value="explicit">
-                {{ video.meta.explicitContent || [] }}
-                <v-expansion-panels>
-                  <v-expansion-panel
-                    title="Title"
-                    text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, ratione debitis quis est labore voluptatibus! Eaque cupiditate minima"
-                  >
-                  </v-expansion-panel>
-                </v-expansion-panels>
+                <v-row>
+                  <v-col>
+                    <v-chip
+                      v-for="(obj, index) in video.meta.explicitContent"
+                      :key="index"
+                      @click="$refs.videoElement.currentTime = obj.offsetTime"
+                      :color="getChipColor(obj.explicit_tag)"
+                      class="mr-1 mb-1"
+                    >
+                      {{ secondsToTimestamp(obj.offsetTime) }}
+                    </v-chip>
+                  </v-col>
+                </v-row>
               </v-window-item>
 
-              <v-window-item value="transcript">
-                {{ video.meta.transcript || [] }}
+              <v-window-item value="debug">
+                <pre
+                  style="background-color: black; color: white; padding: 1rem"
+                  >{{ JSON.stringify(video, null, 2) }}</pre
+                >
               </v-window-item>
             </v-window>
           </v-card-text>
@@ -268,6 +288,20 @@ export default {
   },
   computed: {},
   methods: {
+    getChipColor(likeliness) {
+      switch (likeliness) {
+        case "VERY-LIKELY":
+          return "#FF0000"; // red
+        case "LIKELY":
+          return "#FFA500"; // orange
+        case "POSSIBLE":
+          return "#FFFF00"; // yellow
+        case "UNLIKELY":
+          return "#00FF00"; // green
+        default:
+          return "#000000"; // black
+      }
+    },
     secondsToTimestamp(seconds) {
       const minutes = Math.floor(seconds / 60);
       const remainingSeconds = Math.floor(seconds % 60);

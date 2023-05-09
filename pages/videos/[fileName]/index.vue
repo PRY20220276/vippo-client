@@ -59,16 +59,21 @@
           <v-card-text>
             <v-window v-model="tabSummary">
               <v-window-item value="summary_transcript">
-                <v-row>
+                <v-row v-if="video.meta.podcast_summarization">
                   <v-col>
                     <video
                       controls
                       style="object-fit: contain; width: 100%; height: 100%"
-                      src="https://storage.cloud.google.com/vippo-video-maker/podcast-podcast_auto_summarization.mp4/sd.mp4"
+                      :src="video.meta.podcast_summarization[0]"
                     ></video>
                   </v-col>
                 </v-row>
-                <v-row justify="center" align="center" class="mb-3">
+                <v-row
+                  v-if="video.meta.podcast_summarization"
+                  justify="center"
+                  align="center"
+                  class="mb-3"
+                >
                   <v-col cols="auto">
                     <v-btn
                       color="primary"

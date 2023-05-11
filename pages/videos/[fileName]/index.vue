@@ -84,7 +84,7 @@
                   <v-btn prepend-icon="mdi-auto-fix" @click="() => moveToNewSummarizationPage()">Create custom
                     summary</v-btn>
                 </div>
-                <v-row v-if="video.meta.custom_summaries">
+                <v-row v-if="video.meta.custom_summaries.length">
                   <v-col cols="3">
                     <v-card>
                       <v-card-text>

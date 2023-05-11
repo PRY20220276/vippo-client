@@ -43,12 +43,12 @@
             <template v-if="currentStep === 'index'">
                 <div style="overflow-y: scroll; height: 35vw;">
                     <v-row v-for=" (t, index) in video.meta.transcript " class=" my-3">
-                        <v-card>
+                        <v-card width="100%">
                             <v-card-subtitle>{{ formatSeconds(t.startTime) }} -> {{ formatSeconds(t.endTime)
                             }}</v-card-subtitle>
                             <v-card-text>
-                                <v-row>
-                                    <v-col cols="1"><v-btn @click="setVideoTimestamp(t.startTime)"
+                                <v-row align="center">
+                                    <v-col cols="1" class="text-center"><v-btn @click="setVideoTimestamp(t.startTime)"
                                             icon="mdi-play"></v-btn></v-col>
                                     <v-col>{{ t.transcription }}</v-col>
                                     <v-col cols="1">
@@ -90,13 +90,13 @@
                 </v-form>
                 <div style="overflow-y: scroll; height: 25vw;">
                     <v-row v-for=" tIndex in selectedTranscriptions " class=" my-3">
-                        <v-card>
+                        <v-card width="100%">
                             <v-card-subtitle>{{ formatSeconds(video.meta.transcript[tIndex].startTime) }} -> {{
                                 formatSeconds(video.meta.transcript[tIndex].endTime)
                             }}</v-card-subtitle>
                             <v-card-text>
-                                <v-row>
-                                    <v-col cols="1"><v-btn
+                                <v-row align="center">
+                                    <v-col cols="1" class="text-center"><v-btn
                                             @click="setVideoTimestamp(video.meta.transcript[tIndex].startTime)"
                                             icon="mdi-play"></v-btn></v-col>
                                     <v-col>{{ video.meta.transcript[tIndex].transcription }}</v-col>

@@ -71,13 +71,49 @@
                 </v-row>
               </v-window-item>
               <v-window-item value="summary_object">
-                <v-btn @click="playSummary">
-                  Play Summary {{ hightlight }}/{{
-                    video.meta.objectSummary.length
-                  }}
-                </v-btn>
-                <br />
-                {{ video.meta.objectSummary || [] }}
+                <v-row v-if="video.meta.object_summarization">
+                  <v-col>
+                    <video
+                      controls
+                      style="object-fit: contain; width: 100%; height: 100%"
+                      :src="video.meta.object_summarization[0]"
+                    ></video>
+                  </v-col>
+                </v-row>
+                <v-row
+                  v-if="video.meta.object_summarization"
+                  justify="center"
+                  align="center"
+                  class="mb-3"
+                >
+                  <v-col cols="auto">
+                    <v-btn
+                      color="primary"
+                      prepend-icon="mdi-download"
+                      density="comfortable"
+                    >
+                      Download video
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="auto">
+                    <v-btn
+                      color="#1877F2"
+                      prepend-icon="mdi-facebook"
+                      density="comfortable"
+                    >
+                      Share on Facebook
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="auto">
+                    <v-btn
+                      color="#E1306C"
+                      prepend-icon="mdi-instagram"
+                      density="comfortable"
+                    >
+                      Share on Instagram
+                    </v-btn>
+                  </v-col>
+                </v-row>
               </v-window-item>
               <v-window-item value="custom_summary">
                 <div class="my-2" style="text-align: right;">

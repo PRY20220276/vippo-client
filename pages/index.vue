@@ -1,20 +1,12 @@
 <template>
-  <v-dialog
-    v-model="modalActive"
-    style="max-width: 60vw; min-width: 300px"
-    persistent
-  >
+  <v-dialog v-model="modalActive" style="max-width: 60vw; min-width: 300px" persistent>
     <v-card>
       <v-card-title>
         <h4 class="text-primary">Uploading video</h4>
       </v-card-title>
       <v-card-text style="margin-bottom: 15px">
         <div>
-          <v-progress-linear
-            v-model="progressValue"
-            buffer-value="100"
-            color="primary"
-          ></v-progress-linear>
+          <v-progress-linear v-model="progressValue" buffer-value="100" color="primary"></v-progress-linear>
         </div>
       </v-card-text>
     </v-card>
@@ -24,10 +16,7 @@
     <div class="text-subtitle-1 font-weight-light my-2">
       Our AI Engine will analyze, tag and summarize your video in seconds.
     </div>
-    <VideoUploaderBtn
-      @uploaded="onUploadFile"
-      :upload-options="['local']"
-    ></VideoUploaderBtn>
+    <VideoUploaderBtn @uploaded="onUploadFile" :upload-options="['local']"></VideoUploaderBtn>
   </v-container>
   <v-container class="container">
     <v-row justify="center">
@@ -87,9 +76,17 @@ export default {
     async onUploadFile(e) {
       const file = e;
       let el = this;
-      const { signedUrl } = await this.$store.dispatch("gallery/getSignedURL", {
+      const { signedUrl, error } = await this.$store.dispatch("gallery/getSignedURL", {
         video: file,
-      });
+      }).catch((error) => ({ signedURL: null, error: { status: error.response.status, message: error.response.data.message } }));
+      if (error) {
+        await this.$swal.fire({
+          title: "There was a problem during video uploading",
+          text: error.message,
+          icon: "error",
+        })
+        return
+      }
       this.modalActive = true;
       await this.$store.dispatch("gallery/uploadVideo", {
         video: file,
@@ -97,10 +94,10 @@ export default {
         onProgressCallback: (percentCompleted) => {
           el.progressValue = percentCompleted;
         },
-      });
+      })
       const { isConfirmed } = await this.$swal.fire({
         title: "Your video is now uploaded to your gallery and being process",
-        text: "Check the satus by clicking the following button.",
+        text: "Check the status by clicking the following button.",
         confirmButtonText: "Go to the usage page",
         icon: "success",
       });

@@ -64,7 +64,7 @@
                     <video
                       controls
                       style="object-fit: contain; width: 100%; height: 100%"
-                      :src="video.meta.podcast_summarization[0]"
+                      :src="video.meta.podcast_summarization"
                     ></video>
                   </v-col>
                 </v-row>
@@ -109,7 +109,7 @@
                     <video
                       controls
                       style="object-fit: contain; width: 100%; height: 100%"
-                      :src="video.meta.object_summarization[0]"
+                      :src="video.meta.object_summarization"
                     ></video>
                   </v-col>
                 </v-row>

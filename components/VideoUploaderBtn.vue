@@ -9,34 +9,16 @@
           </div>
         </v-card-title>
         <v-card-text>
-          <v-btn
-            style="background-color: #ebbc81"
-            disabled
-            block
-            class="my-2"
-            v-if="uploadOptions.find((x) => x === 'gallery')"
-            >Desde la galería</v-btn
-          >
-          <v-btn
-            style="background: linear-gradient(45deg, #6200ee, #7b1fa2)"
-            prepend-icon="mdi-cellphone-link"
-            class="my-2"
-            block
-            @click="uploadFromDevice"
-            v-if="uploadOptions.find((x) => x === 'local')"
-            >From my device</v-btn
-          >
+          <v-btn style="background-color: #ebbc81" disabled block class="my-2"
+            v-if="uploadOptions.find((x) => x === 'gallery')">Desde la galería</v-btn>
+          <v-btn style="background: linear-gradient(45deg, #6200ee, #7b1fa2)" prepend-icon="mdi-cellphone-link"
+            class="my-2" block @click="uploadFromDevice" v-if="uploadOptions.find((x) => x === 'local')">From my
+            device</v-btn>
         </v-card-text>
       </v-card>
     </v-dialog>
-    <v-btn
-      style="background: linear-gradient(45deg, #6200ee, #7b1fa2)"
-      prepend-icon="mdi-tray-arrow-up"
-      size="x-large"
-      class="mt-4"
-      :loading="isSelecting"
-      @click="onBtnClick"
-    >
+    <v-btn style="background: linear-gradient(45deg, #6200ee, #7b1fa2)" prepend-icon="mdi-tray-arrow-up" size="x-large"
+      class="mt-4" :loading="isSelecting" @click="onBtnClick">
       Upload Video
     </v-btn>
     <input ref="uploader" class="d-none" type="file" @change="onFileChanged" />
@@ -66,7 +48,11 @@ export default {
     selectedFile: null,
     isSelecting: false,
   }),
+
   methods: {
+    isLogged() {
+      return !!localStorage.getItem("token")
+    },
     closeModal() {
       this.isSelecting = false;
       this.modalActive = false;
@@ -77,7 +63,14 @@ export default {
       this.selectedFile = null;
       this.$refs.uploader.value = null;
     },
-    onBtnClick() {
+    async onBtnClick() {
+      if (!this.isLogged()) {
+        await this.$swal.fire({
+          title: "You must be logged in first",
+          icon: "error",
+        });
+        return
+      }
       this.isSelecting = true;
       this.modalActive = true;
     },
@@ -117,5 +110,4 @@ export default {
   position: relative;
   z-index: 1;
 }
-
 </style>

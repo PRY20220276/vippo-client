@@ -50,25 +50,36 @@
                   <v-col>
                     <video
                       controls
-                      style="object-fit: contain; width: 100%; height: 100%"
-                      :src="video.meta.podcast_summarization"
+                      style="object-fit: contain; width: 100%; height: 50vh"
+                      :src="
+                        textSummaryImgKit
+                          ? video.meta.podcast_summarization.replace(
+                              'https://storage.googleapis.com/vippo-video-maker/',
+                              'https://ik.imagekit.io/4jp52ung9/'
+                            ) + '?tr=w-720,h-1080'
+                          : video.meta.podcast_summarization
+                      "
                     ></video>
                   </v-col>
                 </v-row>
-                <v-row v-if="video.meta.podcast_summarization" justify="center" align="center" class="mb-3">
+                <v-row
+                  v-if="video.meta.podcast_summarization"
+                  justify="center"
+                  align="center"
+                  class="mb-3"
+                >
                   <v-col cols="auto">
-                    <v-btn color="primary" prepend-icon="mdi-download" density="comfortable">
-                      Download video
-                    </v-btn>
-                  </v-col>
-                  <v-col cols="auto">
-                    <v-btn color="#1877F2" prepend-icon="mdi-facebook" density="comfortable">
-                      Share on Facebook
-                    </v-btn>
-                  </v-col>
-                  <v-col cols="auto">
-                    <v-btn color="#E1306C" prepend-icon="mdi-instagram" density="comfortable">
-                      Share on Instagram
+                    <v-btn
+                      :color="textSummaryImgKit ? 'primary' : 'surface'"
+                      prepend-icon="mdi-tablet-cellphone"
+                      density="comfortable"
+                      @click="textSummaryImgKit = !textSummaryImgKit"
+                    >
+                      {{
+                        textSummaryImgKit
+                          ? "Disable Video Transformation"
+                          : "Enable Video Transformation"
+                      }}
                     </v-btn>
                   </v-col>
                 </v-row>
@@ -78,8 +89,15 @@
                   <v-col>
                     <video
                       controls
-                      style="object-fit: contain; width: 100%; height: 100%"
-                      :src="video.meta.object_summarization"
+                      style="object-fit: contain; width: 100%; height: 50vh"
+                      :src="
+                        objectSummaryImgKit
+                          ? video.meta.object_summarization.replace(
+                              'https://storage.googleapis.com/vippo-video-maker/',
+                              'https://ik.imagekit.io/4jp52ung9/'
+                            ) + '?tr=w-720,h-1080'
+                          : video.meta.object_summarization
+                      "
                     ></video>
                   </v-col>
                 </v-row>
@@ -91,29 +109,16 @@
                 >
                   <v-col cols="auto">
                     <v-btn
-                      color="primary"
-                      prepend-icon="mdi-download"
+                      :color="objectSummaryImgKit ? 'primary' : 'surface'"
+                      prepend-icon="mdi-tablet-cellphone"
                       density="comfortable"
+                      @click="objectSummaryImgKit = !objectSummaryImgKit"
                     >
-                      Download video
-                    </v-btn>
-                  </v-col>
-                  <v-col cols="auto">
-                    <v-btn
-                      color="#1877F2"
-                      prepend-icon="mdi-facebook"
-                      density="comfortable"
-                    >
-                      Share on Facebook
-                    </v-btn>
-                  </v-col>
-                  <v-col cols="auto">
-                    <v-btn
-                      color="#E1306C"
-                      prepend-icon="mdi-instagram"
-                      density="comfortable"
-                    >
-                      Share on Instagram
+                      {{
+                        objectSummaryImgKit
+                          ? "Disable Video Transformation"
+                          : "Enable Video Transformation"
+                      }}
                     </v-btn>
                   </v-col>
                 </v-row>
@@ -284,6 +289,9 @@ export default {
     selectedCustomSummaryIndex: 0,
     customSummaries: [{ "chapter": "a New begginning", "url": "https://storage.googleapis.com/download/storage/v1/b/vippo-bucket-media-dev/o/1%2FProgrammer-05092023035200PM.mp4?generation=1683647523965599&alt=media", "state": "done" }, { "chapter": "a New begginning", "url": "https://storage.googleapis.com/download/storage/v1/b/vippo-bucket-media-dev/o/1%2FArthur_Joker-05012023115313PM.mp4?generation=1682985203412565&alt=media", "state": "pending" }],
     hideAnalysis: false,
+    textSummaryImgKit: false,
+    objectSummaryImgKit: false,
+    customSummaryImgKit: false,
   }),
   mounted() {
     this.fetchVideo();

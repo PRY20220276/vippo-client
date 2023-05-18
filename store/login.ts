@@ -44,5 +44,9 @@ export const actions: ActionTree<RooState, RooState> = {
         commit('setEmail', "")
         commit('setPage', 1)
     },
+    async signUp({ commit }, credentials) {
+        return Promise.resolve("")
+        //await LoginService.instance.signUp(credentials)
+    }
 
 }

@@ -95,11 +95,11 @@ export default {
         return;
       }
       try {
-        await this.$store.dispatch("profile/updateProfile", {
-          firstname: this.firstname,
-          lastname: this.lastname,
-          password: this.password
-        });
+        //await this.$store.dispatch("profile/updateProfile", {
+        //  firstname: this.firstname,
+        //  lastname: this.lastname,
+        //  password: this.password
+        //});
         this.$swal.fire("Update acccount", "Your account has just updated", "success")
 
       } catch (error) {

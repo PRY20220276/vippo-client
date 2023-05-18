@@ -23,4 +23,9 @@ export class LoginService {
             email
         })
     }
+    signUp({ password, email }: { password: string, email: string }) {
+        return this.httpClient.post("/auth/register", {
+            email, password
+        })
+    }
 }

@@ -31,7 +31,7 @@ export default {
             const isValid = await this.validate()
             if (!isValid) return
             try {
-                await this.$store.dispatch("login/signUp", { password: this.password, email: this.email })
+                //await this.$store.dispatch("login/signUp", { password: this.password, email: this.email })
                 this.$swal.fire("Register account", "Your account has just registered!", "success")
                 this.$refs.form.reset()
             } catch (error) {

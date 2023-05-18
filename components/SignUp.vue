@@ -31,14 +31,18 @@ export default {
             const isValid = await this.validate()
             if (!isValid) return
             try {
-                await this.$store.dispatch("login/signUp", { password: this.password, email: this.email })
-                this.$swal.fire("Register account", "Your account has just registered!", "success")
-                this.$refs.form.reset()
+                //await this.$store.dispatch("login/signUp", { password: this.password, email: this.email })
+                setTimeout(() => {
+                    this.$swal.fire("Register account", "Your account has just registered!", "success")
+                    this.$refs.form.reset()
+                }, 1500)
             } catch (error) {
                 this.$swal.fire("Register account", "There was a problem during account creation!", "error")
                 this.$refs.form.reset()
+            } finally {
+                this.$emit("onNewAccount")
             }
-            this.$emit("onNewAccount")
+
 
         }
     }

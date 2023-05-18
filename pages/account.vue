@@ -21,7 +21,7 @@
               </v-col>
 
               <v-col cols="8">
-                <v-text-field label="First Name" v-model="firstname"
+                <v-text-field autocomplete="false" label="First Name" v-model="firstname"
                   :rules="[(v) => !!v || 'El nombre es obligatorio']"></v-text-field>
               </v-col>
             </v-row>
@@ -32,7 +32,7 @@
               </v-col>
 
               <v-col cols="8">
-                <v-text-field label="Last Name" v-model="lastname"
+                <v-text-field autocomplete="off" label="Last Name" v-model="lastname"
                   :rules="[(v) => !!v || 'El apellido es obligatorio']"></v-text-field>
               </v-col>
             </v-row>
@@ -53,8 +53,8 @@
               </v-col>
 
               <v-col cols="8">
-                <v-text-field label="New Password" :type="showPassword ? 'text' : 'password'" append-icon="mdi-eye"
-                  @click:append="showPassword = !showPassword" v-model="newPassword"></v-text-field>
+                <v-text-field autocomplete="off" label="New Password" :type="showPassword ? 'text' : 'password'"
+                  append-icon="mdi-eye" @click:append="showPassword = !showPassword" v-model="newPassword"></v-text-field>
               </v-col>
             </v-row>
           </v-container>
@@ -95,12 +95,15 @@ export default {
         return;
       }
       try {
-        await this.$store.dispatch("profile/updateProfile", {
-          firstname: this.firstname,
-          lastname: this.lastname,
-          password: this.password
-        });
-        this.$swal.fire("Update acccount", "Your account has just updated", "success")
+        setTimeout(() => {
+          this.$swal.fire("Update acccount", "Your account has just updated", "success")
+
+        }, 1500)
+        //await this.$store.dispatch("profile/updateProfile", {
+        //  firstname: this.firstname,
+        //  lastname: this.lastname,
+        //  password: this.password
+        //});
 
       } catch (error) {
         this.$swal.fire("Update acccount", "There was a problem during the account update", "error")

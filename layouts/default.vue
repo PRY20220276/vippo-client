@@ -37,6 +37,7 @@
         </v-list>
         <template v-slot:append>
           <v-list nav>
+            <!--
             <v-list-item
               prepend-icon="mdi-xml"
               title="Playground"
@@ -49,6 +50,7 @@
               title="Support Center"
               value="help"
             ></v-list-item>
+            -->
 
             <v-list-item
               class="text-red"

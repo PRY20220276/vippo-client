@@ -3,6 +3,8 @@
         Register new account with your email
     </p>
     <v-form ref="form" @submit.prevent="submit" class="my-2">
+        <v-text-field label="First Name" color="primary" v-model="firstName"></v-text-field>
+        <v-text-field label="Last Name" color="primary" v-model="lastName"></v-text-field>
         <v-text-field label="Email" color="primary" v-model="email" :rules="rules"></v-text-field>
         <v-text-field label="Password" color="primary" v-model="password" type="password"
             :rules="passwordRules"></v-text-field>
@@ -16,6 +18,8 @@ export default {
     data: () => ({
         password: "",
         email: "",
+        firstName: "",
+        lastName: "",
         rules: [
             v => !!v || 'El correo es obligatorio',
             v => /.+@.+\..+/.test(v) || 'Debe ser un correo válido',],

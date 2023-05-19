@@ -15,7 +15,15 @@
       >
       <v-spacer></v-spacer>
       <v-chip class="mr-2" size="large" label>FREE</v-chip>
-      <v-btn prepend-icon="mdi-rotate-right" style="background: linear-gradient(45deg, #6200ee, #7b1fa2)" class="text-white"> Change Plan </v-btn>
+      <v-btn
+        @click="fetchPaymentUrl"
+        prepend-icon="mdi-rotate-right"
+        :loading="btnLoading"
+        style="background: linear-gradient(45deg, #6200ee, #7b1fa2)"
+        class="text-white"
+      >
+        Change Plan
+      </v-btn>
     </v-toolbar>
     <!-- End: Page Toolbar -->
     <ClientOnly>
@@ -71,6 +79,7 @@ export default {
     capacity: "",
     used: "",
     queue: [],
+    btnLoading: false,
   }),
   async beforeMount() {
     const response = await this.$store.dispatch("gallery/getStats");
@@ -81,6 +90,26 @@ export default {
     this.fetchProcessingVids();
   },
   methods: {
+    fetchPaymentUrl() {
+      this.btnLoading = true;
+      $fetch(`https://api.vippo.space/v1/plans/payment-sessions`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token") ?? ""}`,
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          // redirect to res.url
+          if(res.url) {
+            window.location.href = res.url;
+          }
+          this.btnLoading = false;
+        })
+        .catch(() => {
+          this.btnLoading = false;
+        });
+    },
     fetchProcessingVids() {
       $fetch(`https://api.vippo.space/v1/me/videos?filterBy=processing`, {
         headers: {

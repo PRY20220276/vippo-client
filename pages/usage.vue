@@ -9,12 +9,13 @@
     </v-breadcrumbs>
     <!-- End: Page Breadcrumbs -->
     <!-- Page Toolbar -->
-    <v-toolbar color="background" class="text-primary mt-4">
+    <v-toolbar color="background" class="mt-4">
       <v-toolbar-title class="ml-1 text-h5 font-weight-bold text-white"
         >Usage</v-toolbar-title
       >
       <v-spacer></v-spacer>
-      <v-btn prepend-icon="mdi-rotate-right" variant="outlined"> Change </v-btn>
+      <v-chip class="mr-2" size="large" label>FREE</v-chip>
+      <v-btn prepend-icon="mdi-rotate-right" style="background: linear-gradient(45deg, #6200ee, #7b1fa2)" class="text-white"> Change Plan </v-btn>
     </v-toolbar>
     <!-- End: Page Toolbar -->
     <ClientOnly>

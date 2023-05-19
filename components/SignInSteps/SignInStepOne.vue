@@ -8,7 +8,7 @@
       prepend-icon="mdi-email-outline">
       Sign in with Email
     </v-btn>
-    <a href="#" style="font-size: 0.8rem;" @click.prevent="() => goToSignUp()">Don't you have an account? Get one!</a>
+    <a href="#" style="font-size: 0.8rem; color: white" @click.prevent="() => goToSignUp()">Don't you have an account? Get one!</a>
     <p class="text-caption mt-5">
       By using Vippo, you agree to our<br /><a href="#">Privacy Policy</a> and
       <a href="#">Terms of Use</a>.
